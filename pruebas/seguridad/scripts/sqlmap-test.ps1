@@ -65,7 +65,9 @@ if ($SqlmapCmd) {
         "----------------------------------------------------------" | Out-File -FilePath $LogFile -Append -Encoding utf8
         "ENDPOINT: $FullUrl" | Out-File -FilePath $LogFile -Append -Encoding utf8
         "----------------------------------------------------------" | Out-File -FilePath $LogFile -Append -Encoding utf8
-        & sqlmap -u $FullUrl --level=1 --risk=1 --batch --banner 2>&1 | Tee-Object -FilePath $LogFile -Append
+        $res = & sqlmap -u $FullUrl --level=1 --risk=1 --batch --banner 2>&1
+        $res | ForEach-Object { Write-Host $_ }
+        $res | Out-File -FilePath $LogFile -Append -Encoding utf8
     }
 } elseif ($DockerCmd) {
     Write-Host "[INFO] Ejecutando sqlmap via contenedor Docker travelink-sqlmap en red $DockerNetwork..." -ForegroundColor DarkYellow
@@ -76,7 +78,9 @@ if ($SqlmapCmd) {
         "----------------------------------------------------------" | Out-File -FilePath $LogFile -Append -Encoding utf8
         "ENDPOINT: $DockerUrl" | Out-File -FilePath $LogFile -Append -Encoding utf8
         "----------------------------------------------------------" | Out-File -FilePath $LogFile -Append -Encoding utf8
-        docker run --rm --network $DockerNetwork travelink-sqlmap -u $DockerUrl --level=1 --risk=1 --batch --banner 2>&1 | Tee-Object -FilePath $LogFile -Append
+        $res = docker run --rm --network $DockerNetwork travelink-sqlmap -u $DockerUrl --level=1 --risk=1 --batch --banner 2>&1
+        $res | ForEach-Object { Write-Host $_ }
+        $res | Out-File -FilePath $LogFile -Append -Encoding utf8
     }
 } else {
     Write-Host "[AVISO] Ni sqlmap ni Docker estan disponibles en PATH." -ForegroundColor Yellow
