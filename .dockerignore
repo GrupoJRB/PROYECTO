@@ -14,5 +14,6 @@ logs/
 *.class
 .vscode/
 .idea/
-docs/seguridad/evidencias/
-docs/seguridad/reportes/
+docs/
+pruebas/evidencias/
+pruebas/**/cookies*.txt

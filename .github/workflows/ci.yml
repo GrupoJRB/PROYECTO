@@ -115,7 +115,7 @@ jobs:
               echo "[SECURITY GATE PASSED] ZAP no encontro alertas de riesgo ALTO."
             fi
           else
-            echo "[AVISO] zap-report.json no fue generado (probable fallo previo al levantar el entorno Docker en el runner). ZAP ya fue ejecutado y verificado manualmente en el entorno local, ver docs/seguridad/evidencias/zap/."
+            echo "[AVISO] zap-report.json no fue generado (probable fallo previo al levantar el entorno Docker en el runner). ZAP ya fue ejecutado y verificado manualmente en el entorno local, ver pruebas/evidencias/zap/."
           fi
 
       - name: Upload ZAP Scan Artifacts

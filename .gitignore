@@ -52,9 +52,19 @@ sql/prueba-init/
 *.dmp
 *.bak
 
-# Evidencias y reportes de seguridad crudos
-docs/seguridad/evidencias/
+# Evidencias pesadas y reportes generados automáticamente
 *.jtl
 results.jtl
-zap-report.*
 dependency-check-report.*
+dependency-check-jenkins.html
+dependency-check-junit.xml
+dependency-check-gitlab.json
+zap-report.html
+zap-report.json
+pruebas/evidencias/jmeter/**/html_report/index.html
+pruebas/evidencias/jmeter/**/html_report/content/
+pruebas/evidencias/jmeter/**/html_report/sbadmin2-1.0.7/
+
+# Sesiones y cookies temporales de pruebas
+cookies*.txt
+pruebas/**/cookies*.txt
