@@ -1,6 +1,6 @@
 # Tabla de Dependencias Vulnerables y CVEs Detectados (OWASP Dependency-Check)
 
-> **Origen de datos:** Generado automáticamente extrayendo de forma literal los datos de `docs/seguridad/evidencias/dependency-check/dependency-check-report.json`.
+> **Origen de datos:** Generado automáticamente extrayendo de forma literal los datos de `pruebas/evidencias/dependency-check/dependency-check-report.json`.
 > Total de componentes vulnerables analizados: **15**.
 >
 > ⚠️ **Nota Metodológica sobre Discrepancias NVD vs. Fabricante (Vendor Advisory):**
