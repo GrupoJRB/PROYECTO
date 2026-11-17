@@ -61,16 +61,17 @@ Para evitar el uso de credenciales reales o datos personales, las pruebas se sus
 
 ---
 
-## 4. Mapeo del Plan contra los 8 Criterios de la Rúbrica (100 Puntos)
+## 4. Mapeo del Plan contra los 8 Criterios de la Rúbrica Oficial (100 Puntos + 5 Bonus)
 
-| # | Criterio de Evaluación (Rúbrica) | Puntos | Fase y Artefactos de Evidencia |
-|---|---|:---:|---|
-| **1** | **Entorno de Pruebas Reproducible** | 10 pts | `Dockerfile` multi-stage, `docker-compose.yml`, `scripts/reset-db.*`, `sql/seed_pruebas.sql` |
-| **2** | **Análisis Estático (SAST) de Código Fuente** | 15 pts | `docs/seguridad/ANALISIS_ESTATICO.md`, `docs/seguridad/mapa-endpoints.md`, Hallazgos H-01 a H-09 |
-| **3** | **Análisis de Dependencias (SCA)** | 10 pts | `docs/seguridad/tabla-dependencias-cve.md`, `dependency-check-report.html`, `dependency-check-report.json` |
-| **4** | **Reconocimiento y Escaneo de Superficie** | 10 pts | `scripts/seguridad/recon-nmap.*`, `scripts/seguridad/recon-nikto.*`, evidencias en `docs/seguridad/evidencias/` |
-| **5** | **Escaneo Dinámico DAST y Fuzzing** | 15 pts | `zap-report.html`, `zap-report.json`, `ffuf-result.json`, `scripts/seguridad/fuzz-ffuf.*` |
-| **6** | **Pruebas de Carga y Rendimiento** | 15 pts | `jmeter/travelink.jmx`, `results.jtl` (100/300/500 hilos), `resumen-rendimiento.txt`, reportes HTML |
-| **7** | **Validación de Vulnerabilidades y PoCs** | 15 pts | 9 Guías PoC ejecutables (`docs/seguridad/poc/PoC-01` a `PoC-09`), `sqlmap-results.txt` |
-| **8** | **Integración Continua y Reporte Final** | 10 pts | `.github/workflows/ci.yml` (Job security), `docs/seguridad/INFORME_FINAL.md`, `CHECKLIST_RUBRICA.md` |
-| **TOTAL** | | **100 pts** | **Cumplimiento Integral 100%** |
+| # | Criterio de Evaluación (Rúbrica Oficial) | Puntos | Fase y Artefactos de Evidencia |
+|:---:|---|:---:|---|
+| **1** | **Preparación y Entorno Reproducible** | 10 pts | `Dockerfile`, `docker-compose.yml`, `pruebas/entorno/reset-db.*`, `sql/seed_pruebas.sql`, `CUENTAS_PRUEBA.md` |
+| **2** | **Reconocimiento y Análisis de Dependencias (SCA)** | 15 pts | `pruebas/seguridad/scripts/recon-nmap.*`, `recon-nikto.*`, `sca-dependency-check.*`, `tabla-dependencias-cve.md` |
+| **3** | **Escaneo Automático de Vulnerabilidades y Validación** | 15 pts | `pruebas/seguridad/scripts/zap-scan.*`, `zap-parsed.json`, `mapa-endpoints.md`, `VALIDACION_FALSOS_POSITIVOS.md` |
+| **4** | **Explotación y Evidencia Técnica (PoCs)** | 20 pts | 9 Guías PoC (`docs/seguridad/04-poc/PoC-01` a `PoC-09`), Hallazgos H-01 a H-09, `sqlmap-results.txt` |
+| **5** | **Fuzzing y Resiliencia de la API** | 10 pts | `pruebas/seguridad/scripts/fuzz-ffuf.*`, `wordlists/api-endpoints.txt`, `ffuf-result.json`, análisis de errores 500 |
+| **6** | **Pruebas de Carga y Rendimiento** | 10 pts | `pruebas/rendimiento/travelink.jmx`, `jmeter-load.*`, `resumen-rendimiento.txt`, métricas p95/p99 |
+| **7** | **Integración Continua (CI/CD) y Automatización** | 10 pts | `.github/workflows/ci.yml` (Job security, Security Gates automatizados con jq y fail en CVSS >= 9) |
+| **8** | **Calidad del Reporte y Presentación Ejecutiva** | 10 pts | `INFORME_FINAL.md`, `PRESENTACION_BREVE.md`, `CHECKLIST_RUBRICA.md`, `INVENTARIO_DOCUMENTACION.md` |
+| **BONUS** | **Pruebas de Carga Avanzadas con Apache JMeter** | +5 pts | 3 escalones de concurrencia (100, 300, 500 hilos), análisis de JVM warm-up y pool HikariCP |
+| **TOTAL** | **EVALUACIÓN INTEGRAL CON BONIFICACIÓN** | **105 pts** | **100 Pts Base + 5 Pts Bonus (Cumplimiento 105%)** |

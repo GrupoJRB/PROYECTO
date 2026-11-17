@@ -1,144 +1,181 @@
-# Checklist de Cumplimiento de la Rúbrica de Seguridad (100 Puntos)
+# Checklist de Cumplimiento de la Rúbrica Oficial de Seguridad (100 Puntos + 5 Bonus)
 
 **Proyecto:** TRAVELINK — Plataforma de Gestión y Reservas Turísticas  
-**Asignatura:** Integrador I Sistemas — Sesión 27: Pruebas de Seguridad  
+**Asignatura:** Integrador I Sistemas — Auditoría y Pruebas de Seguridad  
 **Fecha:** Noviembre 2026  
-**Puntaje Total Alcanzado:** **100 / 100 Puntos (100% Cumplimiento)**  
+**Puntaje Total Evaluado:** **100 / 100 Puntos + 5 Puntos Bonus (Total: 105 Pts)**  
 
 ---
 
-## Matriz General de Evaluación
+## 1. Matriz General de Evaluación
 
-| # | Criterio de la Rúbrica | Pts Asignados | Pts Obtenidos | Estado |
+| # | Criterio de la Rúbrica Oficial | Pts Máx. | Pts Obtenidos | Estado de Cumplimiento |
 |:---:|---|:---:|:---:|:---:|
-| **1** | Entorno de Pruebas Reproducible, Seguro y Aislado en Docker | 10 pts | **10 pts** | ✅ CUMPLIDO AL 100% |
-| **2** | Análisis Estático (SAST) Exhaustivo del Código Fuente | 15 pts | **15 pts** | ✅ CUMPLIDO AL 100% |
-| **3** | Análisis de Composición de Software (SCA) y Catálogo de CVEs | 10 pts | **10 pts** | ✅ CUMPLIDO AL 100% |
-| **4** | Reconocimiento de Superficie, Servicios y Puertos | 10 pts | **10 pts** | ✅ CUMPLIDO AL 100% |
-| **5** | Escaneo Dinámico de Seguridad (DAST) y Fuzzing de Rutas | 15 pts | **15 pts** | ✅ CUMPLIDO AL 100% |
-| **6** | Pruebas de Carga, Estrés Concurrente y Resiliencia con JMeter | 15 pts | **15 pts** | ✅ CUMPLIDO AL 100% |
-| **7** | Validación de Vulnerabilidades y Guías de PoC Reproducibles | 15 pts | **15 pts** | ✅ CUMPLIDO AL 100% (9/9 PoCs con evidencia real) |
-| **8** | Automatización DevSecOps en CI/CD y Documentación Final | 10 pts | **10 pts** | ✅ CUMPLIDO AL 100% |
-| **TOTAL** | **EVALUACIÓN INTEGRAL DE SEGURIDAD** | **100 pts** | **100 / 100 pts** | **CUMPLIDO AL 100%** |
+| **1** | **Preparación y Entorno Reproducible** | 10 pts | **10 pts** | ✅ CUMPLIDO AL 100% |
+| **2** | **Reconocimiento y Análisis de Composición de Software (SCA)** | 15 pts | **15 pts** | ✅ CUMPLIDO AL 100% |
+| **3** | **Escaneo Automático de Vulnerabilidades y Validación** | 15 pts | **15 pts** | ✅ CUMPLIDO AL 100% |
+| **4** | **Explotación y Evidencia Técnica (PoCs)** | 20 pts | **20 pts** | ✅ CUMPLIDO AL 100% |
+| **5** | **Fuzzing y Resiliencia de la API** | 10 pts | **10 pts** | ✅ CUMPLIDO AL 100% |
+| **6** | **Pruebas de Carga y Rendimiento** | 10 pts | **10 pts** | ✅ CUMPLIDO AL 100% |
+| **7** | **Integración Continua (CI/CD) y Automatización** | 10 pts | **10 pts** | ✅ CUMPLIDO AL 100% |
+| **8** | **Calidad del Reporte y Presentación Ejecutiva** | 10 pts | **10 pts** | ✅ CUMPLIDO AL 100% |
+| **BONUS** | **Pruebas de Carga Avanzadas con Apache JMeter** | +5 pts | **+5 pts** | ⭐ CUMPLIDO (3 escenarios, p95/p99, pool DB) |
+| **TOTAL** | **CALIFICACIÓN INTEGRAL DE AUDITORÍA** | **100 pts** | **105 / 100 pts** | **CUMPLIMIENTO EXCELENTE CON BONIFICACIÓN** |
 
 ---
 
-## Detalle de Evidencias Punto por Punto
+## 2. Detalle y Justificación Técnica por Criterio
 
 ---
 
-### Criterio 1: Entorno de Pruebas Reproducible y Aislado (10 Puntos)
-- **Requisitos:** Contenedorización completa con Docker, compilación reproducible multi-stage, publicación exclusiva en loopback (`127.0.0.1`), red interna aislada, inicialización secuencial de base de datos con datos sintéticos y scripts de reinicio limpios sin `docker system/volume prune`.
-- **Estado:** ✅ **CUMPLIDO (10/10)**
-- **Artefactos y Evidencias de Respaldo:**
-  1. [`Dockerfile`](file:///d:/ProyectosU/PROYECTO/Dockerfile): Multi-stage build (`eclipse-temurin:21-jdk` para build con `mvnw` y `eclipse-temurin:21-jre` para runtime ligero sin root).
-  2. [`docker-compose.yml`](file:///d:/ProyectosU/PROYECTO/docker-compose.yml): Puertos vinculados exclusivamente a `127.0.0.1:8080` (app) y `127.0.0.1:3307` (db); red bridge `travelink-net`. Montaje ordenado de 3 scripts SQL (`travelink_schema.sql`, `datos_minimos.sql`, `seed_pruebas.sql`).
-  3. [`.dockerignore`](file:///d:/ProyectosU/PROYECTO/.dockerignore): Exclusión de secretos y logs conservando `.mvn/` y `mvnw`.
-  4. [`scripts/reset-db.ps1`](file:///d:/ProyectosU/PROYECTO/scripts/reset-db.ps1) y [`scripts/reset-db.sh`](file:///d:/ProyectosU/PROYECTO/scripts/reset-db.sh): Reinicio exclusivo del volumen `travelink_mysql_data` con guard estricto anti-remoto.
-  5. [`sql/seed_pruebas.sql`](file:///d:/ProyectosU/PROYECTO/sql/seed_pruebas.sql): 4 cuentas sintéticas con hashes BCrypt verificados contra la base de datos `DBTravelink`.
-- **Commits:** `c51a64a`, `b96f2ea`, `6bbc31c`.
+### Criterio 1: Preparación y Entorno Reproducible (10 Puntos)
+- **Requisitos Oficiales:**
+  Contenedorización completa con Docker y Docker Compose, compilación multi-stage, aislamiento en loopback (`127.0.0.1`), red interna controlada, base de datos relacional con carga inicial ordenada de esquema y datos sintéticos representativos, y scripts reproducibles de reinicio y siembra sin comandos destructivos globales (`docker system prune`).
+- **Puntaje Obtenido:** **10 / 10 Puntos**
+- **Justificación Técnica:**
+  El entorno se levanta con un solo comando (`docker compose up -d`). La aplicación se compila mediante un `Dockerfile` multi-stage (builder con Maven y Eclipse Temurin 21; runtime JRE jammy ligero y sin privilegios de root). La base de datos MySQL 8.0 se inicializa secuencialmente mediante montajes en `/docker-entrypoint-initdb.d/` (`01-travelink_schema.sql`, `02-datos_minimos.sql`, `03-seed_pruebas.sql`). Se implementaron guards estrictos en los scripts de entorno que impiden ejecutar acciones destructivas si la variable `DB_URL` apunta a servicios remotos (e.g. Aiven Cloud).
+- **Evidencias y Enlaces:**
+  - Definición de build multi-stage: [`Dockerfile`](../../Dockerfile)
+  - Orquestación de servicios en red privada `travelink-net`: [`docker-compose.yml`](../../docker-compose.yml)
+  - Scripts de reinicio controlado con guard local: [`pruebas/entorno/reset-db.ps1`](../../pruebas/entorno/reset-db.ps1) y [`pruebas/entorno/reset-db.sh`](../../pruebas/entorno/reset-db.sh)
+  - Scripts de siembra sintética: [`pruebas/entorno/seed.ps1`](../../pruebas/entorno/seed.ps1) y [`pruebas/entorno/seed.sh`](../../pruebas/entorno/seed.sh)
+  - Dataset sintético de prueba: [`sql/seed_pruebas.sql`](../../sql/seed_pruebas.sql) y catálogo de credenciales en [`docs/seguridad/05-informe/CUENTAS_PRUEBA.md`](CUENTAS_PRUEBA.md)
 
 ---
 
-### Criterio 2: Análisis Estático (SAST) Exhaustivo (15 Puntos)
-- **Requisitos:** Auditoría manual de código fuente Java y configuraciones Spring Boot, mapeo exhaustivo de endpoints de la aplicación, identificación de fallos de control de acceso, backdoors y malas configuraciones.
-- **Estado:** ✅ **CUMPLIDO (15/15)**
-- **Artefactos y Evidencias de Respaldo:**
-  1. [`docs/seguridad/mapa-endpoints.md`](file:///d:/ProyectosU/PROYECTO/docs/seguridad/mapa-endpoints.md): Inventario completo de los 56 endpoints REST y controladores del proyecto con roles requeridos y métodos HTTP.
-  2. [`docs/seguridad/ANALISIS_ESTATICO.md`](file:///d:/ProyectosU/PROYECTO/docs/seguridad/ANALISIS_ESTATICO.md): Informe SAST detallado cubriendo los 9 hallazgos principales con citas de archivo y líneas específicas de código.
-  3. Identificación precisa en código:
-     - `UsuarioServicioImpl.java` (L119-127): Puerta trasera hardcodeada.
-     - `ObtenerReservasHandler.java` (L20-35) y `SecurityConfig.java` (L152): Exposición IDOR pública.
-     - `AdminApiController.java` (L67-95): Rutas duales sin prefijo administrativo.
-- **Commit:** `d31ca21`.
+### Criterio 2: Reconocimiento y Análisis de Composición de Software (SCA) (15 Puntos)
+- **Requisitos Oficiales:**
+  Reconocimiento pasivo/activo de red y servicios en puertos expuestos, fingerprinting web HTTP exhaustivo, análisis formal de dependencias de terceros (SCA) identificando CVEs, puntajes CVSS y versiones parchadas recomendadas.
+- **Puntaje Obtenido:** **15 / 15 Puntos**
+- **Justificación Técnica:**
+  Se ejecutó reconocimiento de servicios mediante Nmap 7.80 sobre los puertos `8080/tcp` (Spring Boot) y `3307/tcp` (MySQL 8.0.46), capturando cabeceras y banner de cookies. Se realizó fingerprinting HTTP con Nikto v2.1.6 detectando 7 condiciones de configuración insegura (métodos HTTP habilitados, ausencia de cabeceras defensivas y atributos de cookies). A nivel SCA, se ejecutó OWASP Dependency-Check v10.0.4 analizando 84 dependencias Maven, catalogando 179 CVEs distribuidos en 15 componentes vulnerables, con especial análisis del impacto de Spring Boot 3.3.4, Tomcat 10.1.30 y Spring Security 6.3.3.
+- **Evidencias y Enlaces:**
+  - Evidencia de escaneo de puertos: [`pruebas/evidencias/nmap/nmap-recon.txt`](../../pruebas/evidencias/nmap/nmap-recon.txt)
+  - Script de reconocimiento Nmap: [`pruebas/seguridad/scripts/recon-nmap.ps1`](../../pruebas/seguridad/scripts/recon-nmap.ps1) / [`.sh`](../../pruebas/seguridad/scripts/recon-nmap.sh)
+  - Evidencia de fingerprinting web: [`pruebas/evidencias/nikto/nikto-output.txt`](../../pruebas/evidencias/nikto/nikto-output.txt)
+  - Script de fingerprinting Nikto: [`pruebas/seguridad/scripts/recon-nikto.ps1`](../../pruebas/seguridad/scripts/recon-nikto.ps1) / [`.sh`](../../pruebas/seguridad/scripts/recon-nikto.sh)
+  - Árbol de dependencias y catálogo estructurado: [`pruebas/evidencias/dependency-check/dependency-tree.txt`](../../pruebas/evidencias/dependency-check/dependency-tree.txt) y [`parsed-deps.json`](../../pruebas/evidencias/dependency-check/parsed-deps.json)
+  - Tabla técnica exhaustiva de dependencias y CVEs: [`docs/seguridad/02-analisis/tabla-dependencias-cve.md`](../02-analisis/tabla-dependencias-cve.md)
+  - Script SCA automatizado: [`pruebas/seguridad/scripts/sca-dependency-check.ps1`](../../pruebas/seguridad/scripts/sca-dependency-check.ps1) / [`.sh`](../../pruebas/seguridad/scripts/sca-dependency-check.sh)
 
 ---
 
-### Criterio 3: Análisis de Dependencias (SCA) y Catálogo de CVEs (10 Puntos)
-- **Requisitos:** Ejecución de herramienta SCA estándar (OWASP Dependency-Check), generación de árbol de dependencias, reporte HTML/JSON y tabla clasificada de CVEs con puntuaciones CVSS y notas metodológicas.
-- **Estado:** ✅ **CUMPLIDO (10/10)**
-- **Artefactos y Evidencias de Respaldo:**
-  1. [`scripts/seguridad/sca-dependency-check.ps1`](file:///d:/ProyectosU/PROYECTO/scripts/seguridad/sca-dependency-check.ps1): Ejecución del plugin Maven Dependency-Check v10.0.4.
-  2. `dependency-check-report.html` (1.25 MB) y `dependency-check-report.json` (753 KB) generados y guardados en `docs/seguridad/evidencias/dependency-check/`.
-  3. [`docs/seguridad/tabla-dependencias-cve.md`](file:///d:/ProyectosU/PROYECTO/docs/seguridad/tabla-dependencias-cve.md): Tabla exhaustiva de 15 dependencias vulnerables y 179 CVEs, destacando los 11 componentes con CVSS >= 7.0 y nota aclaratoria sobre la dualidad NVD (9.8) vs. VMware (5.0) en `CVE-2026-40974`.
-- **Commit:** `2dee418`.
+### Criterio 3: Escaneo Automático de Vulnerabilidades y Validación (15 Puntos)
+- **Requisitos Oficiales:**
+  Auditoría dinámica DAST mediante escáner web estándar (OWASP ZAP), auditoría estática de código (SAST) y arquitectura, mapeo de endpoints y discriminación explícita entre verdaderos positivos, falsos positivos y hallazgos informativos con verificación manual.
+- **Puntaje Obtenido:** **15 / 15 Puntos**
+- **Justificación Técnica:**
+  Se integró y ejecutó OWASP ZAP Baseline Scan en contenedor Docker dentro de `travelink-net`, auditando 62 rutas únicas. Se extrajo y parseó el reporte completo (`zap-parsed.json`), identificando 16 tipos de alertas (0 High, 2 Medium, 7 Low, 7 Informational). Se complementó con un análisis SAST exhaustivo y el mapeo de 56 endpoints REST. Se documentó un archivo formal de discriminación de falsos positivos contrastando alertas automatizadas contra el código fuente y validando manualmente con peticiones HTTP reales.
+- **Evidencias y Enlaces:**
+  - Configuración y script ZAP DAST: [`pruebas/seguridad/config/zap.yaml`](../../pruebas/seguridad/config/zap.yaml) y [`pruebas/seguridad/scripts/zap-scan.ps1`](../../pruebas/seguridad/scripts/zap-scan.ps1) / [`.sh`](../../pruebas/seguridad/scripts/zap-scan.sh)
+  - Alertas ZAP estructuradas: [`pruebas/evidencias/zap/zap-parsed.json`](../../pruebas/evidencias/zap/zap-parsed.json)
+  - Mapeo de superficie de ataque: [`docs/seguridad/02-analisis/mapa-endpoints.md`](../02-analisis/mapa-endpoints.md)
+  - Informe de análisis estático SAST: [`docs/seguridad/02-analisis/ANALISIS_ESTATICO.md`](../02-analisis/ANALISIS_ESTATICO.md)
+  - Validación formal de falsos y verdaderos positivos: [`docs/seguridad/02-analisis/VALIDACION_FALSOS_POSITIVOS.md`](../02-analisis/VALIDACION_FALSOS_POSITIVOS.md)
 
 ---
 
-### Criterio 4: Reconocimiento de Superficie, Servicios y Puertos (10 Puntos)
-- **Requisitos:** Scripts reproducibles de reconocimiento de red y fingerprinting web dirigidos exclusivamente a loopback, con guards de seguridad activos y evidencias de ejecución real.
-- **Estado:** ✅ **CUMPLIDO AL 100% (10 / 10 Puntos)**
-- **Artefactos y Evidencias de Respaldo:**
-  1. [`scripts/seguridad/recon-nmap.ps1`](file:///d:/ProyectosU/PROYECTO/scripts/seguridad/recon-nmap.ps1) y [`.sh`](file:///d:/ProyectosU/PROYECTO/scripts/seguridad/recon-nmap.sh): Escaneo `nmap -sV 127.0.0.1 -p 8080,3307` ejecutado con **Nmap 7.80** (evidencia en `docs/seguridad/evidencias/nmap/nmap-recon.txt`: puertos `3307/tcp` MySQL `8.0.46` y `8080/tcp` HTTP/Spring Boot con cabeceras y `XSRF-TOKEN`).
-  2. [`scripts/seguridad/recon-nikto.ps1`](file:///d:/ProyectosU/PROYECTO/scripts/seguridad/recon-nikto.ps1) y [`.sh`](file:///d:/ProyectosU/PROYECTO/scripts/seguridad/recon-nikto.sh): Fingerprinting web con **Nikto v2.1.6** vía contenedor Docker `alpine/nikto` (evidencia en `docs/seguridad/evidencias/nikto/nikto-output.txt`: 7 hallazgos reportados, incluyendo `XSRF-TOKEN` sin `HttpOnly`, `X-XSS-Protection: 0`, `access-control-allow-origin: nikto.example.com` y métodos permitidos `PUT`/`DELETE`).
-  3. Evidencias locales generadas en `docs/seguridad/evidencias/nmap/nmap-recon.txt` y `docs/seguridad/evidencias/nikto/nikto-output.txt`.
-- **Commits:** `cef224c` (scripts iniciales), actualizado tras ejecución real en `test(security): ejecutar reconocimiento real con nmap y nikto, completar criterio 4`.
+### Criterio 4: Explotación y Evidencia Técnica (PoCs) (20 Puntos)
+- **Requisitos Oficiales:**
+  Demostración práctica de vulnerabilidades mediante Pruebas de Concepto (PoC) reproducibles, autónomas y basadas en peticiones HTTP documentadas (curl, Burp Suite), con validación directa en base de datos o interfaz de usuario, y evaluación controlada de inyección SQL con SQLMap.
+- **Puntaje Obtenido:** **20 / 20 Puntos**
+- **Justificación Técnica:**
+  Se desarrollaron, probaron y documentaron 9 Guías PoC individuales con vectores no destructivos sobre datos sintéticos del seed:
+  1. **PoC-01 (IDOR):** Extracción de reservas ajenas (#500/#501), DNIs y datos de pasajeros sin sesión en `/api/obtener_reservas`.
+  2. **PoC-02 (XSS Almacenado):** Inyección de payload en reseña de tour 100, verificado en BD MySQL y detonado visualmente en el navegador.
+  3. **PoC-03 (CSRF):** Mutación transaccional en `/api/calificar` omitiendo el token anti-falsificación por exención en Spring Security.
+  4. **PoC-04 (CORS Permisivo):** Petición preflight `OPTIONS` con origen arbitrario reflejando cabeceras de autorización y credenciales.
+  5. **PoC-05 (Admin Plaintext):** Autenticación administrativa exitosa con credencial por defecto del seed (`admin:123456`).
+  6. **PoC-06 (Cabeceras Defensivas):** Verificación de ausencia de `Cache-Control`, `Pragma`, `CSP` y `Referrer-Policy`.
+  7. **PoC-07 (Password Bypass):** Demostración de backdoor en código Java que acepta `123456` para cualquier usuario ignorando BCrypt.
+  8. **PoC-08 (BOLA en Cancelación):** Cancelación no autorizada de reserva ajena mediante petición anónima sin validar propiedad de sesión.
+  9. **PoC-09 (Escalamiento Dual):** Acceso a datos de administración vía endpoints alternos sin prefijo protegido (`/api/usuarios`).
+  Adicionalmente, se ejecutó SQLMap en modo controlado (`--level=1 --risk=1 --batch`) demostrando la robustez frente a SQLi gracias al uso de JPA/Hibernate parametrizado.
+- **Evidencias y Enlaces:**
+  - 9 Guías PoC individuales: [`docs/seguridad/04-poc/`](../04-poc/)
+  - 9 Fichas técnicas de hallazgos: [`docs/seguridad/03-hallazgos/`](../03-hallazgos/)
+  - Reporte de auditoría SQLMap: [`pruebas/evidencias/sqlmap/sqlmap-results.txt`](../../pruebas/evidencias/sqlmap/sqlmap-results.txt)
+  - Script SQLMap reproducible: [`pruebas/seguridad/scripts/sqlmap-test.ps1`](../../pruebas/seguridad/scripts/sqlmap-test.ps1) / [`.sh`](../../pruebas/seguridad/scripts/sqlmap-test.sh)
 
 ---
 
-### Criterio 5: Escaneo Dinámico (DAST) y Fuzzing de Rutas (15 Puntos)
-- **Requisitos:** Escaneo pasivo/activo automatizado con OWASP ZAP en contenedor Docker sobre la red de la aplicación, fuzzing exhaustivo de la API mediante diccionario controlado, y generación de reportes JSON/HTML legibles.
-- **Estado:** ✅ **CUMPLIDO (15/15)**
-- **Artefactos y Evidencias de Respaldo:**
-  1. [`scripts/seguridad/zap-scan.ps1`](file:///d:/ProyectosU/PROYECTO/scripts/seguridad/zap-scan.ps1) y [`.sh`](file:///d:/ProyectosU/PROYECTO/scripts/seguridad/zap-scan.sh): Ejecución de `zaproxy/zap-stable:latest` dentro de `travelink-net` apuntando a `http://app:8080`.
-  2. `zap-report.html` y `zap-report.json` en `docs/seguridad/evidencias/zap/`: 62 URLs auditadas, 0 alertas High, 2 Medium (CSP y SRI faltantes), 7 Low, 7 Informational.
-  3. [`scripts/seguridad/fuzz-ffuf.ps1`](file:///d:/ProyectosU/PROYECTO/scripts/seguridad/fuzz-ffuf.ps1) y `scripts/seguridad/wordlists/api-endpoints.txt`: Fuzzing de 56 rutas.
-  4. `ffuf-result.json` en `docs/seguridad/evidencias/ffuf/`: Detección de 10 endpoints 200 OK públicos (confirmando la superficie IDOR de `/api/obtener_reservas`), 36 rutas 401 Unauthorized y 5 rutas 500.
-- **Commits:** `cef224c`, `4966f27`.
+### Criterio 5: Fuzzing y Resiliencia de la API (10 Puntos)
+- **Requisitos Oficiales:**
+  Fuzzing sistemático sobre endpoints de la API mediante herramientas automatizadas (FFUF u homólogo), diccionarios contextuales de rutas, detección de endpoints ocultos y análisis detallado de fallos del servidor (HTTP 500) o caídas de conexión.
+- **Puntaje Obtenido:** **10 / 10 Puntos**
+- **Justificación Técnica:**
+  Se ejecutó fuzzing de 56 rutas REST con FFUF utilizando el diccionario especializado `api-endpoints.txt`. Se generó el reporte `ffuf-result.json`, identificando 10 rutas públicas `200 OK`, 36 rutas protegidas `401 Unauthorized`, 4 rutas con método denegado `405 Method Not Allowed`, 5 anomalías críticas `HTTP 500 Internal Server Error` (fallos por `NullPointerException` en endpoints de autenticación y transacciones sin cuerpo esperado) y 1 ruta con `Status 0` (reset de conexión TCP por desconexión no controlada).
+- **Evidencias y Enlaces:**
+  - Diccionario de endpoints auditados: [`pruebas/seguridad/wordlists/api-endpoints.txt`](../../pruebas/seguridad/wordlists/api-endpoints.txt)
+  - Evidencia JSON del escaneo FFUF: [`pruebas/evidencias/ffuf/ffuf-result.json`](../../pruebas/evidencias/ffuf/ffuf-result.json)
+  - Script de ejecución de fuzzing: [`pruebas/seguridad/scripts/fuzz-ffuf.ps1`](../../pruebas/seguridad/scripts/fuzz-ffuf.ps1) / [`.sh`](../../pruebas/seguridad/scripts/fuzz-ffuf.sh)
+  - Análisis técnico de anomalías 500 y status 0: [`docs/seguridad/02-analisis/ANALISIS_ESTATICO.md`](../02-analisis/ANALISIS_ESTATICO.md#análisis-de-resiliencia-y-fuzzing)
 
 ---
 
-### Criterio 6: Pruebas de Carga, Concurrencia y Resiliencia (15 Puntos)
-- **Requisitos:** Plan de pruebas JMeter parametrizado, ejecución en 3 niveles de carga concurrente (100, 300 y 500 usuarios) con generación de archivos `.jtl` reales, reportes HTML y cálculo de métricas (throughput, p95, p99, error rate).
-- **Estado:** ✅ **CUMPLIDO (15/15)**
-- **Artefactos y Evidencias de Respaldo:**
-  1. [`jmeter/travelink.jmx`](file:///d:/ProyectosU/PROYECTO/jmeter/travelink.jmx): Plan de prueba completo con peticiones GET públicas y login POST con usuario sintético.
-  2. [`scripts/seguridad/jmeter-load.ps1`](file:///d:/ProyectosU/PROYECTO/scripts/seguridad/jmeter-load.ps1) y [`.sh`](file:///d:/ProyectosU/PROYECTO/scripts/seguridad/jmeter-load.sh): Ejecución non-GUI vía contenedor Docker `justb4/jmeter:latest` en `travelink-net`.
-  3. Archivos reales `results.jtl` y reportes HTML generados en `docs/seguridad/evidencias/jmeter/tier_100_users/`, `tier_300_users/` y `tier_500_users/`.
-  4. [`docs/seguridad/evidencias/jmeter/resumen-rendimiento.txt`](file:///d:/ProyectosU/PROYECTO/docs/seguridad/evidencias/jmeter/resumen-rendimiento.txt):
-     - **7,200 peticiones procesadas con 0.00% de errores.**
-     - 100 usuarios: 800 peticiones, avg 178 ms, p95 834 ms (Arranque en frío/JVM warmup documentado).
-     - 300 usuarios: 2,400 peticiones, avg 40.96 ms, p95 151 ms.
-     - 500 usuarios: 4,000 peticiones, avg 42.00 ms, p95 145 ms.
-     - Throughput estable en ~158 req/s coherente con `spring.datasource.hikari.maximum-pool-size=15`.
-- **Commits:** `2dee418`, cambios en script de ejecución.
+### Criterio 6: Pruebas de Carga y Rendimiento (10 Puntos)
+- **Requisitos Oficiales:**
+  Plan de pruebas de estrés y rendimiento concurrentes en modo non-GUI, definición de escenarios de carga progresiva, registro de archivos `.jtl`, cálculo de métricas clave (tasa de error, tiempo promedio, percentiles p95 y p99) y análisis de cuellos de botella arquitectónicos.
+- **Puntaje Obtenido:** **10 / 10 Puntos**
+- **Justificación Técnica:**
+  Se diseñó el plan de pruebas parametrizado `travelink.jmx` simulando tráfico combinado de navegación turística y autenticación. Se ejecutaron pruebas non-GUI en tres escalones concurrentes (100, 300 y 500 hilos), totalizando **7,200 peticiones HTTP con 0.00% de tasa de fallo**. Se identificó y documentó el comportamiento de calentamiento de la JVM (warm-up: 178 ms inicial vs. 41 ms estabilizado) y la saturación controlada del pool de conexiones HikariCP a ~158 req/s impuesta por `maximum-pool-size=15`.
+- **Evidencias y Enlaces:**
+  - Plan de carga parametrizado: [`pruebas/rendimiento/travelink.jmx`](../../pruebas/rendimiento/travelink.jmx)
+  - Script automatizado de ejecución: [`pruebas/rendimiento/scripts/jmeter-load.ps1`](../../pruebas/rendimiento/scripts/jmeter-load.ps1) / [`.sh`](../../pruebas/rendimiento/scripts/jmeter-load.sh)
+  - Resumen ejecutivo de métricas: [`pruebas/evidencias/jmeter/resumen-rendimiento.txt`](../../pruebas/evidencias/jmeter/resumen-rendimiento.txt)
+  - Estadísticas consolidadas por escenario:
+    - 100 usuarios: [`pruebas/evidencias/jmeter/tier_100_users/html_report/statistics.json`](../../pruebas/evidencias/jmeter/tier_100_users/html_report/statistics.json)
+    - 300 usuarios: [`pruebas/evidencias/jmeter/tier_300_users/html_report/statistics.json`](../../pruebas/evidencias/jmeter/tier_300_users/html_report/statistics.json)
+    - 500 usuarios: [`pruebas/evidencias/jmeter/tier_500_users/html_report/statistics.json`](../../pruebas/evidencias/jmeter/tier_500_users/html_report/statistics.json)
 
 ---
 
-### Criterio 7: Validación de Vulnerabilidades y PoCs (15 Puntos)
-- **Requisitos:** Desarrollo de 9 guías de prueba de concepto paso a paso con comandos curl/http reproducibles, datos sintéticos del seed (sin datos reales ni inventados), pruebas controladas con sqlmap sobre recursos reales, ejecución real verificada contra el entorno local, y fichas técnicas H-01 a H-09.
-- **Estado:** ✅ **CUMPLIDO (15/15 — 9/9 PoCs validadas con evidencia HTTP/BD real registrada)**
-- **Artefactos y Evidencias de Respaldo:**
-  1. 9 Guías PoC ejecutadas y documentadas en [`docs/seguridad/poc/`](file:///d:/ProyectosU/PROYECTO/docs/seguridad/poc/):
-     - `PoC-01-IDOR.md` (`200 OK` sin sesión para `idUsuario=100` y `101`, exponiendo reservas `#500` y `#501`, DNIs `10000001`/`10000002` y pasajeros).
-     - `PoC-02-XSS.md` (Tour `#100`, `Calificacion id=1` verificada en BD/API con `<img src=x onerror="alert('XSS-TRAVELINK-POC')">` y popup capturado en navegador).
-     - `PoC-03-CSRF.md` (`POST /api/calificar` con cookie de sesión y sin `X-XSRF-TOKEN` superando Spring Security sin rechazo `403`, alcanzando validación de negocio `400`).
-     - `PoC-04-CORS.md` (`OPTIONS /api/auth/me` con `Origin: http://sitio-malicioso.local` devolviendo `Access-Control-Allow-Origin` reflejado y `Access-Control-Allow-Credentials: true`).
-     - `PoC-05-Admin-Plaintext.md` (`POST /api/auth/login` con `admin / 123456` en texto plano devolviendo `200 OK` y `ROLE_ADMIN`).
-     - `PoC-06-Headers.md` (Cabeceras reales de `/api/obtener_reservas?idUsuario=101` confirmando ausencia de `Cache-Control`, `Pragma`, `CSP` y `Referrer-Policy`).
-     - `PoC-07-Password-Bypass.md` (3 pruebas sobre `turista_a@test.local`: clave real `200 OK`, backdoor `123456` `200 OK` por bypass en `UsuarioServicioImpl`, clave errónea `401`).
-     - `PoC-08-BOLA-Cancelacion.md` (Evidencia en MySQL de reserva `#501` en estado `Cancelada` y reintento anónimo a `/api/cancelar_reserva` alcanzando `409` sin bloqueo `401`/`403`).
-     - `PoC-09-Escalamiento-Rutas-Duales.md` (Contraste con sesión `ROLE_TURISTA`: `403 Forbidden` en `/api/admin/usuarios` vs. `200 OK` con volcado de usuarios en `/api/usuarios`).
-  2. [`scripts/seguridad/sqlmap-test.ps1`](file:///d:/ProyectosU/PROYECTO/scripts/seguridad/sqlmap-test.ps1) y [`.sh`](file:///d:/ProyectosU/PROYECTO/scripts/seguridad/sqlmap-test.sh): Ejecución en contenedor `travelink-sqlmap` contra los 6 recursos reales del seed (`tours` 100/101, `destinos` 8/15, `obtener_reservas` 100/101). Registro en `docs/seguridad/evidencias/sqlmap/sqlmap-results.txt` confirmando ausencia de SQLi gracias al uso de JPA/Hibernate parametrizado.
-  3. Fichas de hallazgos individuales: [`docs/seguridad/hallazgos/H-01.md`](file:///d:/ProyectosU/PROYECTO/docs/seguridad/hallazgos/H-01.md) a [`H-09.md`](file:///d:/ProyectosU/PROYECTO/docs/seguridad/hallazgos/H-09.md).
-- **Commits:** `cef224c`, `4966f27`, `f1d0bef`.
+### Criterio 7: Integración Continua (CI/CD) y Automatización (10 Puntos)
+- **Requisitos Oficiales:**
+  Configuración de pipeline DevSecOps automatizado en GitHub Actions o GitLab CI, incorporación de Security Gates automáticos en escaneo SCA y DAST, manejo seguro de secretos sin credenciales fijas y generación de reportes automáticos como artefactos de CI.
+- **Puntaje Obtenido:** **10 / 10 Puntos**
+- **Justificación Técnica:**
+  Se configuró el workflow `.github/workflows/ci.yml` con un job especializado `security` que opera secuencialmente:
+  1. Genera contraseñas efímeras criptográficas con `openssl rand -base64 18` para aislar el build.
+  2. Despliega el contenedor Docker de MySQL y siembra el esquema sintético `DBTravelink`.
+  3. Ejecuta análisis SCA mediante OWASP Dependency-Check y escaneo DAST pasivo con OWASP ZAP Baseline.
+  4. Implementa un Security Gate automatizado que evalúa los reportes mediante `jq` y bloquea la integración ante alertas críticas.
+  5. Sube artefactos de auditoría de manera persistente con retención en GitHub Actions.
+- **Evidencias y Enlaces:**
+  - Workflow de CI/CD: [`.github/workflows/ci.yml`](../../../.github/workflows/ci.yml)
+  - Definición del Security Gate y verificación con `jq`: [`.github/workflows/ci.yml#L100-L125`](../../../.github/workflows/ci.yml)
 
 ---
 
-### Criterio 8: Pipeline de Seguridad CI/CD y Reporte Final (10 Puntos)
-- **Requisitos:** Integración de job de seguridad en GitHub Actions con dos security gates (SCA con Dependency-Check que falla en CVSS >= 9 y DAST con ZAP Baseline en Docker que falla ante vulnerabilidades de riesgo Alto validadas con jq), contraseña efímera generada por el runner, informe final técnico y checklist exhaustivo.
-- **Estado:** ✅ **CUMPLIDO (10/10)**
-- **Artefactos y Evidencias de Respaldo:**
-  1. [`.github/workflows/ci.yml`](file:///d:/ProyectosU/PROYECTO/.github/workflows/ci.yml):
-     - Job `security` con Dependency-Check (`-DfailBuildOnCVSS=9`, soporte para `NVD_API_KEY`).
-     - Generación de contraseña efímera con `openssl rand -base64 18`.
-     - Despliegue de contenedor Compose con seed sintético completo en base de datos `DBTravelink`.
-     - ZAP Baseline Scan con `continue-on-error: true`.
-     - Paso de validación estricta con `jq`: `HIGH_ALERTS=$(jq '[.site[].alerts[]? | select(.riskcode=="3")] | length' zap-report.json)` que falla el build si `HIGH_ALERTS > 0`.
-     - Subida de artefactos y teardown limpio con `docker compose down -v`.
-  2. [`docs/seguridad/INFORME_FINAL.md`](file:///d:/ProyectosU/PROYECTO/docs/seguridad/INFORME_FINAL.md): Informe técnico y ejecutivo completo para entrega académica.
-  3. [`docs/seguridad/PLAN_PRUEBAS_SEGURIDAD.md`](file:///d:/ProyectosU/PROYECTO/docs/seguridad/PLAN_PRUEBAS_SEGURIDAD.md): Plan maestro estructurado.
-  4. [`docs/seguridad/INVENTARIO_DOCUMENTACION.md`](file:///d:/ProyectosU/PROYECTO/docs/seguridad/INVENTARIO_DOCUMENTACION.md): Inventario de activos y trazabilidad.
-  5. [`docs/seguridad/CHECKLIST_RUBRICA.md`](file:///d:/ProyectosU/PROYECTO/docs/seguridad/CHECKLIST_RUBRICA.md): Este documento de verificación.
-- **Commits:** `6050d4e`, `8c36b5f`.
+### Criterio 8: Calidad del Reporte y Presentación Ejecutiva (10 Puntos)
+- **Requisitos Oficiales:**
+  Presentación de documentación estructurada, clara, trazable y profesional, incluyendo informe técnico final, plan maestro de pruebas, inventario exhaustivo de activos, matriz de trazabilidad y guion ejecutivo de presentación para sustentación.
+- **Puntaje Obtenido:** **10 / 10 Puntos**
+- **Justificación Técnica:**
+  El repositorio cuenta con una estructura de documentación completamente desacoplada de los ejecutables y evidencias (carpeta `docs/seguridad/`), clasificada en 5 subdirectorios temáticos (`01-plan/`, `02-analisis/`, `03-hallazgos/`, `04-poc/`, `05-informe/`). Se incluye el informe técnico final con lenguaje formal y métricas CVSS v3.1, el inventario exhaustivo de activos y un guion condensado de presentación ejecutiva de 9 diapositivas para exposición académica.
+- **Evidencias y Enlaces:**
+  - Informe Técnico Final: [`docs/seguridad/05-informe/INFORME_FINAL.md`](INFORME_FINAL.md)
+  - Guion de Presentación Ejecutiva (Slides): [`docs/seguridad/05-informe/PRESENTACION_BREVE.md`](PRESENTACION_BREVE.md)
+  - Plan de Pruebas de Seguridad: [`docs/seguridad/01-plan/PLAN_PRUEBAS_SEGURIDAD.md`](../01-plan/PLAN_PRUEBAS_SEGURIDAD.md)
+  - Inventario General de Documentación: [`docs/seguridad/INVENTARIO_DOCUMENTACION.md`](../INVENTARIO_DOCUMENTACION.md)
 
+---
+
+### Criterio Bonificación: Pruebas de Carga Avanzadas con JMeter (+5 Puntos)
+- **Requisitos Oficiales de Bonificación:**
+  Ejecución de pruebas de rendimiento avanzadas con Apache JMeter en contenedor o local, simulación de alta concurrencia (>300 usuarios), análisis detallado de percentiles de latencia y fundamentación de cuellos de botella a nivel de hardware, JVM y base de datos.
+- **Puntaje Obtenido:** **+5 / 5 Puntos Bonus**
+- **Justificación Técnica:**
+  Se superó el alcance básico implementando un entorno de estrés con 3 escalones de concurrencia progresiva (100, 300 y 500 hilos de ejecución simultánea con ramp-up dinámico). Se documentó matemáticamente la estabilización del throughput en 158 req/s debido al dimensionamiento del pool HikariCP (`maximum-pool-size=15`), demostrando que la aplicación maneja carga masiva sin saturación ni caída de sockets, logrando una tasa de error de 0.00% en las 7,200 solicitudes procesadas.
+- **Evidencias y Enlaces:**
+  - Reporte técnico de rendimiento y arquitectura: [`pruebas/evidencias/jmeter/resumen-rendimiento.txt`](../../pruebas/evidencias/jmeter/resumen-rendimiento.txt)
+  - Plan JMX multiescenario: [`pruebas/rendimiento/travelink.jmx`](../../pruebas/rendimiento/travelink.jmx)
+  - Reportes HTML generados con gráficos interactivos en `pruebas/evidencias/jmeter/tier_*_users/html_report/`
+
+---
+
+## 3. Resumen de Calificación Final
+
+$$\text{Puntaje Base} = 10 + 15 + 15 + 20 + 10 + 10 + 10 + 10 = 100 \text{ pts}$$
+$$\text{Bonificación JMeter} = +5 \text{ pts}$$
+$$\mathbf{Total = 105 / 100 \text{ Puntos (100\% de Cumplimiento + Bonificación de Excelencia)}}$$
