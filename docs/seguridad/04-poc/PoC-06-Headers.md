@@ -14,6 +14,10 @@ En `SecurityConfig.java:191-196`, la configuración de cabeceras HTTP de Spring 
 ---
 
 ## 2. Precondiciones
+
+> [!NOTE]
+> **Acceso desde el host (app vs localhost):** La ejecución se realiza desde el equipo anfitrión contra `http://127.0.0.1:8080` (o `http://localhost:8080`). El nombre `http://app:8080` es exclusivo de la red interna Docker `travelink-net` (en el navegador anfitrión genera `DNS_PROBE_FINISHED_NXDOMAIN`). La aplicación sirve HTTP plano en local (`https://` no está disponible).
+
 1. App local levantada en `http://127.0.0.1:8080`.
 
 ---

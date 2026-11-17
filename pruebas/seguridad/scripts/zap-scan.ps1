@@ -1,10 +1,17 @@
-<#
+﻿<#
 .SYNOPSIS
     Ejecuta el escaneo DAST OWASP ZAP Baseline sobre el contenedor de la aplicación.
 .DESCRIPTION
     Utiliza la imagen oficial actual zaproxy/zap-stable.
     Se conecta a la red travelink-net y ataca http://app:8080.
     Genera reportes HTML y JSON en pruebas/evidencias/zap/.
+
+    NOTA DE RED Y HOSTS (app vs localhost):
+    - http://app:8080 es el nombre de servicio dentro de la red Docker interna travelink-net;
+      solo lo resuelven los contenedores (ZAP, SQLMap, JMeter, CI). En el navegador anfitrión
+      genera DNS_PROBE_FINISHED_NXDOMAIN.
+    - Desde el navegador web o PowerShell del equipo anfitrión se usa http://localhost:8080 (o 127.0.0.1:8080).
+    - La aplicación sirve HTTP plano en local (https:// no funciona hasta configurar proxy inverso Nginx con TLS).
 #>
 
 [CmdletBinding()]

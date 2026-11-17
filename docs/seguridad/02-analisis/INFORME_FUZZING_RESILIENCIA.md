@@ -163,3 +163,4 @@ Las 5 anomalías con código 500 registraron exactamente una longitud de respues
 | `/api/auth/logout` | 500 | 200 | Verificación segura de nulidad de sesión antes de invalidar. |
 | `/api/eventos/emitir` | 500 | 400 | Exigir validación de payload con `@Valid`. |
 | `/api/eventos` | 0 | 406 / SSE 200 | Timeout controlado de `SseEmitter` y filtro de cabecera `Accept`. |
+

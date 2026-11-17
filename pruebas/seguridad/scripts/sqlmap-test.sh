@@ -2,6 +2,12 @@
 # ==============================================================================
 # Script: sqlmap-test.sh
 # Descripción: Pruebas de inyección SQL controladas (--level=1 --risk=1 --batch).
+# NOTA DE RED (app vs localhost):
+# - http://app:8080 es el nombre de servicio dentro de la red Docker travelink-net;
+#   solo lo resuelven los contenedores (ZAP, SQLMap, JMeter, CI). En el navegador
+#   anfitrión genera DNS_PROBE_FINISHED_NXDOMAIN.
+# - Desde el navegador o curl del host anfitrión se usa http://localhost:8080.
+# - La aplicación sirve HTTP plano en local (https:// requiere proxy TLS).
 # ==============================================================================
 set -euo pipefail
 

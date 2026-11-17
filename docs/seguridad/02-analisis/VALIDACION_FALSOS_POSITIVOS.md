@@ -131,3 +131,4 @@ A continuación se presentan 3 validaciones manuales independientes con peticion
   La directiva `Set-Cookie` omite el flag `HttpOnly;` y `SameSite;`. Por consiguiente:
   `document.cookie` expone el valor del token CSRF ante cualquier script inyectado (como el demostrado en `PoC-02-XSS`). El script malicioso puede leer el token y adjuntarlo en cabeceras `X-XSRF-TOKEN` automatizadas para forzar operaciones privilegiadas.
 - **PoCs Vinculadas:** [`docs/seguridad/04-poc/PoC-02-XSS.md`](../04-poc/PoC-02-XSS.md) y [`docs/seguridad/04-poc/PoC-03-CSRF.md`](../04-poc/PoC-03-CSRF.md)
+

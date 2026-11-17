@@ -1,10 +1,17 @@
-<#
+﻿<#
 .SYNOPSIS
     Ejecuta pruebas de inyeccion SQL controladas y no destructivas con sqlmap.
 .DESCRIPTION
     Ejecuta sqlmap con --level=1 --risk=1 --batch unicamente sobre la app local.
     Evalua endpoints con parametros sobre recursos reales del seed (tours 100 y 101, destinos 8 y 15, reservas 500 y 501).
     Guarda los reportes en pruebas/evidencias/sqlmap/.
+
+    NOTA DE RED Y HOSTS (app vs localhost):
+    - http://app:8080 es el nombre de servicio dentro de la red Docker interna travelink-net;
+      solo lo resuelven los contenedores (ZAP, SQLMap, JMeter, CI). En el navegador anfitrión
+      genera DNS_PROBE_FINISHED_NXDOMAIN.
+    - Desde el navegador web o PowerShell del equipo anfitrión se usa http://localhost:8080 (o 127.0.0.1:8080).
+    - La aplicación sirve HTTP plano en local (https:// no funciona hasta configurar proxy inverso Nginx con TLS).
 #>
 
 [CmdletBinding()]

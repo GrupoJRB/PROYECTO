@@ -14,6 +14,10 @@ El endpoint `GET /api/obtener_reservas` está declarado en `SecurityConfig.java:
 ---
 
 ## 2. Precondiciones
+
+> [!NOTE]
+> **Acceso desde el host (app vs localhost):** La ejecución se realiza desde el equipo anfitrión contra `http://127.0.0.1:8080` (o `http://localhost:8080`). El nombre `http://app:8080` es exclusivo de la red interna Docker `travelink-net` (en el navegador anfitrión genera `DNS_PROBE_FINISHED_NXDOMAIN`). La aplicación sirve HTTP plano en local (`https://` no está disponible).
+
 1. Contenedores Docker locales levantados y saludables (`travelink-db` y `travelink-app`).
 2. Base de datos inicializada con el seed sintético (`sql/seed_pruebas.sql`):
    - Usuario `turista_a@test.local` (`idUsuario = 100`), titular de la Reserva `#500`.

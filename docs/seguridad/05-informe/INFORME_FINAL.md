@@ -83,6 +83,12 @@ El plan de aseguramiento contempló **23 pruebas planificadas**, de las cuales *
 
 Se ejecutaron pruebas de estrés sobre `http://app:8080` evaluando llamadas mixtas públicas (`/api/destinos`, `/api/tours`) y transaccionales (`/api/auth/login`).
 
+> [!NOTE]
+> **Diferencia de Acceso entre `app:8080` y `localhost:8080`:**
+> - `http://app:8080` es el nombre de servicio dentro de la red Docker interna `travelink-net`; solo lo resuelven los contenedores (ZAP, SQLMap, JMeter, CI). Si se ingresa desde el navegador en el host anfitrión se obtendrá el error `DNS_PROBE_FINISHED_NXDOMAIN`.
+> - Desde el navegador web o PowerShell del equipo anfitrión se debe usar siempre `http://localhost:8080` (o `http://127.0.0.1:8080`), ya que `docker-compose.yml` lo publica exclusivamente en `127.0.0.1:8080`.
+> - La aplicación sirve HTTP plano en local; las peticiones con `https://` fallarán por rechazo de conexión o ausencia de certificado hasta que se configure un reverse proxy (ej. Nginx con TLS).
+
 ### Tabla Consolidada de Resultados de Carga:
 
 | Nivel de Concurrencia | Peticiones Totales | Throughput | Tpo. Respuesta Promedio | Percentil 95 (p95) | Percentil 99 (p99) | Tasa de Error |

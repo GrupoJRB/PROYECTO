@@ -70,7 +70,17 @@ Las pruebas unitarias y de integración de la aplicación residen en `Springboot
 
 ---
 
-## 4. Orden Recomendado de Ejecución
+## 4. Cómo acceder según desde dónde ejecutes (app vs localhost)
+
+> [!IMPORTANT]
+> **Diferencia crítica entre `http://app:8080` y `http://localhost:8080`:**
+> - **Desde contenedores Docker (ZAP, SQLMap, JMeter en Docker, GitHub Actions runner):** Se utiliza `http://app:8080`. El nombre `app` es el hostname del servicio dentro de la red puente Docker `travelink-net`, resoluble **únicamente** por los contenedores conectados a dicha red. Si intentas ingresar a `http://app:8080` desde el navegador web de Windows (Chrome, Edge), el DNS del sistema operativo fallará con el error `DNS_PROBE_FINISHED_NXDOMAIN`.
+> - **Desde el navegador web o terminal (PowerShell / Bash) del equipo anfitrión:** Se utiliza **`http://localhost:8080`** (o `http://127.0.0.1:8080`). `docker-compose.yml` mapea y publica el puerto en la interfaz loopback (`127.0.0.1:8080:8080`) protegiendo el servicio de la red externa.
+> - **Protocolo HTTP vs HTTPS:** La aplicación sirve **HTTP plano** en el puerto 8080. Si colocas `https://` en la barra de direcciones o en `curl`, la conexión fallará por rechazo de protocolo hasta que se implemente un reverse proxy Nginx con terminación TLS.
+
+---
+
+## 5. Orden Recomendado de Ejecución
 
 | Orden | Fase de Prueba | Script (PowerShell / Bash) | Salida Generada |
 |:---:|---|---|---|

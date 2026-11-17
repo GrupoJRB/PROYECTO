@@ -77,7 +77,7 @@
   - Resultados ZAP Baseline: 16 alertas identificadas y clasificadas.
 * **Puntos Clave:**
   - **SCA:** Detección de CVEs en dependencias transitivas (ej. `CVE-2026-47884` en Spring WebMVC y discrepancias NVD en `CVE-2026-40974`). Creación de archivo `.trivyignore` con excepciones justificadas técnicamente.
-  - **DAST ZAP:** Ejecución de `zap-baseline.py` contra `http://app:8080`.
+  - **DAST ZAP:** Ejecución de `zap-baseline.py` contra `http://app:8080` (nombre interno en red Docker `travelink-net`; desde el host se accede mediante `http://localhost:8080`).
   - **Triaje Riguroso:** Clasificación de las 16 alertas:
     - **Verdaderos Positivos (Confirmados manualmente):** Ausencia de cabeceras de seguridad (`X-Frame-Options`, `CSP`), CORS permisivo con credenciales (`OPTIONS`) y Cookie `XSRF-TOKEN` sin flag `HttpOnly`.
     - **Falsos Positivos Documentados:** Timestamp Disclosure (propio del runtime Java) y CSP Header Not Set catalogado como mitigación de cabeceras.
