@@ -43,8 +43,7 @@ jobs:
         run: ./mvnw -B -q dependency:resolve -DskipTests
 
       - name: SCA con Trivy
-        uses: aquasecurity/trivy-action@master
-        continue-on-error: true
+        uses: aquasecurity/trivy-action@v0.28.0
         env:
           TRIVY_DB_REPOSITORY: public.ecr.aws/aquasecurity/trivy-db:2
           TRIVY_JAVA_DB_REPOSITORY: public.ecr.aws/aquasecurity/trivy-java-db:1
@@ -56,6 +55,7 @@ jobs:
           severity: CRITICAL
           exit-code: '1'
           ignore-unfixed: true
+          trivyignores: .trivyignore
           format: table
 
       - name: Upload Dependency-Check Artifacts
@@ -103,7 +103,6 @@ jobs:
             zap-baseline.py -t http://app:8080 -r zap-report.html -J zap-report.json -I
 
       - name: Verify ZAP Findings (Fail on High/Critical)
-        continue-on-error: true
         run: |
           if [ -f zap-report.json ]; then
             HIGH_ALERTS=$(jq '[.site[].alerts[]? | select(.riskcode=="3")] | length' zap-report.json 2>/dev/null || echo "0")

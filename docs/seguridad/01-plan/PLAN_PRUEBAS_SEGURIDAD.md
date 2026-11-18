@@ -44,6 +44,11 @@ Para evitar el uso de credenciales reales o datos personales, las pruebas se sus
   - Destinos: IDs 8 y 15.
   - Reservas: IDs 500 y 501.
 
+### 2.3. Pruebas Unitarias vs Pruebas de Integración con Testcontainers
+La suite de pruebas automatizadas en `Springboot/test/` comprende 23 pruebas:
+- **20 Pruebas Unitarias:** Ejecutan sobre controladores y capas de servicio mediante mocks aislados (`AuthApiControllerTest`, `CalificacionServicioTest`, `ComisionServicioTest`, `ReservaCancelacionTest`, `ReservaServicioTest`), aprobadas al 100% (0 fallos, 0 errores).
+- **3 Pruebas de Integración (`ReservaPersistenciaIntegracionTest`):** Diseñadas para validar la persistencia contra un contenedor MySQL real gestionado mediante **Testcontainers**. La clase cuenta con la anotación `@Testcontainers(disabledWithoutDocker = true)`. En compilaciones locales o runners donde el socket de Docker no está enlazado directamente a la JVM de pruebas, Testcontainers omite de forma segura estas 3 pruebas (`Skipped: 3`), protegiendo el build unitario contra fallos de infraestructura externa.
+
 ---
 
 ## 3. Matriz de Herramientas y Técnicas de Evaluación

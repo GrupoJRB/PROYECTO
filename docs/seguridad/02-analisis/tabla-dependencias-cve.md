@@ -5,6 +5,9 @@
 >
 > ⚠️ **Nota Metodológica sobre Discrepancias NVD vs. Fabricante (Vendor Advisory):**
 > Para vulnerabilidades como **`CVE-2026-40974`**, el fabricante (VMware / Spring) clasifica la severidad con CVSS 5.0 MEDIO (vector `AV:A/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L`, asumiendo red adyacente y MITM en el canal de Cassandra), mientras que el National Vulnerability Database (NVD) calculó preliminarmente CVSS 9.8 CRÍTICO (vector `AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H`). OWASP Dependency-Check consume directamente la fuente NVD al no emplear el analizador de OSS Index ni base privada, por lo que el reporte de escaneo refleja formalmente la evaluación NVD (9.8). En el informe de seguridad se documenta esta dualidad técnica.
+>
+> 📌 **Deuda Técnica y Ciclo de Vida de Soporte (Spring Boot 3.x a 4.x):**
+> Se actualizó el proyecto a **Spring Boot 3.3.13** (el último parche de mantenimiento comunitario gratuito de la serie 3.3). Todo el ecosistema Spring Boot 3.x se encuentra formalmente fuera de soporte gratuito general (Spring Boot 3.3 cerró su ciclo OSS y la línea 3.5 culminó en junio de 2026). Diversas vulnerabilidades publicadas en 2026 (como las de Tomcat 10.1.5x o Spring Security 6.5+) tienen sus parches consolidados en la línea mayor **Spring Boot 4.x** (Spring Framework 7.x). Como trabajo futuro planificado se proyecta la migración mayor a Spring Boot 4.x, gestionando mientras tanto los hallazgos residuales mediante `.trivyignore` bajo la política de **riesgo aceptado temporalmente** con vencimiento `exp:2026-12-31`.
 
 ## 1. Resumen por Componente y Severidad Máxima
 

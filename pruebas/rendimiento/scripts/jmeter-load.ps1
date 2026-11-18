@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     Ejecuta pruebas de carga y concurrencia con Apache JMeter (100, 300 y 500 usuarios).
 .DESCRIPTION

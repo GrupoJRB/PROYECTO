@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     Ejecuta pruebas de inyeccion SQL controladas y no destructivas con sqlmap.
 .DESCRIPTION

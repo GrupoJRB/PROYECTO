@@ -129,6 +129,11 @@ El escaneo con OWASP Dependency-Check analizó todas las dependencias transitiva
 - **Componentes Críticos (CVSS >= 9.0):** `tomcat-embed-core-10.1.30.jar` (55 CVEs, máx 9.8), `spring-core-6.1.13.jar` (35 CVEs, máx 9.8), `spring-web-6.1.13.jar` (35 CVEs, máx 9.8), `spring-boot-3.3.4.jar` (7 CVEs, máx 9.8), `spring-security-core-6.3.3.jar` (8 CVEs, máx 9.1).
 - **Nota Metodológica sobre `CVE-2026-40974`:** El fabricante (VMware) califica la ausencia de verificación de hostname SSL en Cassandra con CVSS 5.0 (Medio), mientras que NVD le asignó de forma preliminar CVSS 9.8 (Crítico). Dependency-Check refleja formalmente el registro de NVD en el reporte local.
 
+### 5.1.1. Deuda Técnica del Ecosistema y Ciclo de Vida (Spring Boot 3.x a 4.x)
+- **Estado de Soporte:** El proyecto fue actualizado a **Spring Boot 3.3.13** (último release comunitario de la serie 3.3). Todo el ciclo Spring Boot 3.x se encuentra fuera de soporte comunitario gratuito (Spring Boot 3.3 cerró su ciclo OSS y la línea 3.5 culminó en junio de 2026).
+- **Vulnerabilidades de 2026:** Los CVEs críticos publicados en 2026 (como las series de Apache Tomcat 10.1.5x o Spring Security 6.5+/7.0+) tienen sus correcciones definitivas en la línea **Spring Boot 4.x** (Spring Framework 7.x).
+- **Plan de Acción y Mitigación:** Se define la migración mayor a Spring Boot 4.x como trabajo futuro planificado. Para el pipeline de integración continua (CI) y la entrega académica, las vulnerabilidades residuales se gestionan en `.trivyignore` bajo la política formal de **riesgo aceptado temporalmente** con vencimiento `exp:2026-12-31`.
+
 ### 5.2. Hallazgos del Análisis Dinámico (ZAP Baseline)
 El escaneo pasivo de OWASP ZAP sobre 62 URLs arrojó:
 - **0 Alertas de Riesgo Alto.**

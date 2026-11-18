@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     Ejecuta el escaneo DAST OWASP ZAP Baseline sobre el contenedor de la aplicación.
 .DESCRIPTION
