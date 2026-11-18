@@ -1,6 +1,8 @@
-# Procesos de Negocio — TRAVELINK 🔄
+# Módulo de Procesos de Negocio
 
-Este directorio documenta los flujos operacionales y diagramas de proceso del sistema turístico **TRAVELINK**, reflejando las interacciones entre turistas, agencias de viaje y administradores.
+Índice de documentación sobre los flujos operativos y transaccionales de TRAVELINK.
 
-- **Documento Principal:** [`PROCESOS_NEGOCIO.md`](PROCESOS_NEGOCIO.md)
-- **Alcance de Flujos:** Registro y validación formal de agencias (RUC), publicación de paquetes turísticos y cupos, flujo integral de reserva y pago, cálculo de comisiones de plataforma (15%) y ciclo de moderación de reseñas.
+## Contenido
+
+- [PROCESOS_NEGOCIO.md](PROCESOS_NEGOCIO.md): Especificación funcional de los procesos de reservas, comisiones, agencias y moderación.
+- [DIAGRAMAS_PROCESOS.md](DIAGRAMAS_PROCESOS.md): Flujogramas y diagramas de secuencia en sintaxis Mermaid de los flujos reales de código (registro, reserva, cancelación, calificación, comisiones, importación y reportes).
