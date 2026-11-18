@@ -1,0 +1,71 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: travelink-prod-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-DBTravelink}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER:-travelink_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - travelink_prod_db_data:/var/lib/mysql
+      - ../../sql/travelink_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ../../sql/datos_minimos.sql:/docker-entrypoint-initdb.d/02_datos_minimos.sql:ro
+    networks:
+      - travelink-prod-net
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$$MYSQL_ROOT_PASSWORD || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  app:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    image: travelink-app:prod
+    container_name: travelink-prod-app
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_URL: jdbc:mysql://db:3306/${MYSQL_DATABASE:-DBTravelink}?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=America/Lima
+      DB_USERNAME: ${MYSQL_USER:-travelink_user}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      JAVA_OPTS: "-Xms512m -Xmx1024m -XX:+UseG1GC"
+    networks:
+      - travelink-prod-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8080/api/destinos"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  web:
+    image: nginx:1.25-alpine
+    container_name: travelink-prod-web
+    restart: always
+    depends_on:
+      app:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ../servidor/nginx.conf:/etc/nginx/nginx.conf:ro
+      - travelink_cert_data:/etc/nginx/certs:ro
+    networks:
+      - travelink-prod-net
+
+volumes:
+  travelink_prod_db_data:
+  travelink_cert_data:
+
+networks:
+  travelink-prod-net:
+    driver: bridge
