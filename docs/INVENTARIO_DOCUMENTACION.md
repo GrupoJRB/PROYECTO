@@ -1,136 +1,152 @@
 # Inventario Maestro de Documentación y Artefactos — TRAVELINK 📚
 
-Este documento es el catálogo maestro y punto único de referencia de todos los activos de documentación, especificaciones de ingeniería, planes de prueba, análisis de seguridad, procedimientos de despliegue y evidencias técnicas del proyecto **TRAVELINK**.
+Este documento es el catálogo maestro y punto único de referencia de todos los activos de documentación, especificaciones de ingeniería, planes de prueba, análisis de seguridad, procedimientos de despliegue y evidencias técnicas del proyecto **TRAVELINK**, alineados con los **Ítems del Taller 1 al 12** y el **Módulo de Despliegue en Producción**.
 
 ---
 
-## 1. Documentación Raíz e Infraestructura
+## 1. Documentación Raíz e Infraestructura del Proyecto
 
-| Activo / Ruta | Tipo | Descripción | Estado |
-|---|---|---|:---:|
-| [`README.md`](../README.md) | Manual | Presentación del proyecto, stack técnico, instalación y ejecución local | Implementado / Verificado |
-| [`Dockerfile`](../Dockerfile) | Infraestructura | Construcción multi-stage (Maven Temurin 21 + JRE Eclipse Temurin 21) | Implementado / Verificado |
-| [`docker-compose.yml`](../docker-compose.yml) | Orquestación | Servicios locales `travelink-db` y `travelink-app` en loopback | Implementado / Verificado |
-| [`.env.example`](../.env.example) | Configuración | Plantilla de variables de entorno para base de datos y credenciales | Implementado / Verificado |
-| [`.trivyignore`](../.trivyignore) | Seguridad SCA | 9 excepciones justificadas de CVEs críticos (vencimiento `exp:2027-06-30`) | Implementado / Verificado |
-| [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) | DevSecOps CI | Pipeline de integración continua: build, tests, SCA Trivy y DAST ZAP | Implementado / Verificado |
-| [`.github/workflows/deploy.yml`](../.github/workflows/deploy.yml) | CD Pipeline | Pipeline de empaquetado y validación de contenedores de producción | Implementado / Verificado |
+| Activo / Ruta | Tipo | Descripción | Ítem (Taller / Fase) | Estado |
+|---|---|---|:---:|:---:|
+| [`README.md`](../README.md) | Manual | Presentación del proyecto, stack técnico, instalación, accesos y ejecución | Taller 7 / General | Implementado / Verificado |
+| [`Dockerfile`](../Dockerfile) | Infraestructura | Construcción multi-stage (Maven Temurin 21 + JRE Eclipse Temurin 21) | Taller 7 / Entorno | Implementado / Verificado |
+| [`docker-compose.yml`](../docker-compose.yml) | Orquestación | Servicios locales `travelink-db` y `travelink-app` en loopback | Taller 7 / Entorno | Implementado / Verificado |
+| [`.env.example`](../.env.example) | Configuración | Plantilla de variables de entorno para base de datos y credenciales | Taller 7 / Entorno | Implementado / Verificado |
+| [`.trivyignore`](../.trivyignore) | Seguridad SCA | 9 excepciones justificadas de CVEs críticos (vencimiento `exp:2027-06-30`) | Taller 8 / SCA | Implementado / Verificado |
+| [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) | DevSecOps CI | Pipeline CI: build, tests, SCA Trivy (v0.36.0) y DAST ZAP | Taller 12 / CI-CD | Implementado / Verificado |
+| [`.github/workflows/deploy.yml`](../.github/workflows/deploy.yml) | CD Pipeline | Pipeline CD: build, tests, Docker GHCR, smoke test y compuerta prod | Despliegue / CD | Implementado / Verificado |
 
 ---
 
 ## 2. Base de Datos y Datos Sintéticos (`sql/`)
 
-| Archivo / Ruta | Tipo | Contenido y Propósito | Estado |
-|---|---|---|:---:|
-| [`sql/travelink_schema.sql`](../sql/travelink_schema.sql) | DDL | Definición de las 18 tablas relacionales del sistema TRAVELINK | Producción / Verificado |
-| [`sql/datos_minimos.sql`](../sql/datos_minimos.sql) | DML Inicial | Roles del sistema y cuenta administrativa inicial | Producción / Verificado |
-| [`sql/seed_pruebas.sql`](../sql/seed_pruebas.sql) | DML Sintético | 4 usuarios de prueba (hashes BCrypt reales), tours 100/101 y reservas 500/501 | Implementado / Verificado |
+| Archivo / Ruta | Tipo | Contenido y Propósito | Ítem (Taller / Fase) | Estado |
+|---|---|---|:---:|:---:|
+| [`sql/travelink_schema.sql`](../sql/travelink_schema.sql) | DDL | Definición de las 18 tablas relacionales del sistema TRAVELINK | Taller 3 / Base de Datos | Producción / Verificado |
+| [`sql/datos_minimos.sql`](../sql/datos_minimos.sql) | DML Inicial | Roles del sistema y cuenta administrativa inicial | Taller 3 / Base de Datos | Producción / Verificado |
+| [`sql/seed_pruebas.sql`](../sql/seed_pruebas.sql) | DML Sintético | 4 usuarios de prueba (hashes BCrypt reales), tours 100/101 y reservas 500/501 | Taller 3 / Base de Datos | Implementado / Verificado |
 
 ---
 
 ## 3. Arquitectura del Sistema (`docs/arquitectura/`)
 
-| Documento | Descripción | Estado |
-|---|---|:---:|
-| [`docs/arquitectura/README.md`](arquitectura/README.md) | Índice de arquitectura y componentes del sistema | Implementado |
-| [`docs/arquitectura/ARQUITECTURA.md`](arquitectura/ARQUITECTURA.md) | Especificación arquitectural MVC, capas, dualidad JPA/JDBC, catálogo `pom.xml` | Implementado |
+| Documento | Tipo | Descripción | Ítem (Taller / Fase) | Estado |
+|---|---|---|:---:|:---:|
+| [`docs/arquitectura/README.md`](arquitectura/README.md) | Índice | Índice de arquitectura y componentes del sistema | Taller 2 / Arquitectura | Implementado |
+| [`docs/arquitectura/ARQUITECTURA.md`](arquitectura/ARQUITECTURA.md) | Arquitectura | Especificación MVC, capas, dualidad JPA/JDBC, catálogo `pom.xml` | Taller 2 / Arquitectura | Implementado |
 
 ---
 
 ## 4. Ingeniería de Software (`docs/ingenieria/`)
 
-| Módulo | Documento | Descripción | Estado |
-|---|---|---|:---:|
-| **General** | [`docs/ingenieria/README.md`](ingenieria/README.md) | Índice consolidado de artefactos de ingeniería de software | Implementado |
-| **Procesos** | [`docs/ingenieria/procesos/PROCESOS_NEGOCIO.md`](ingenieria/procesos/PROCESOS_NEGOCIO.md) | Flujos funcionales de reservas, comisiones (15%), aprobación de agencias y tours | Implementado |
-| **Procesos** | [`docs/ingenieria/procesos/DIAGRAMAS_PROCESOS.md`](ingenieria/procesos/DIAGRAMAS_PROCESOS.md) | Diagramas de flujo y secuencia Mermaid de los procesos reales del código | Implementado |
-| **Diseño** | [`docs/ingenieria/diseno/DISENO_SISTEMA.md`](ingenieria/diseno/DISENO_SISTEMA.md) | Patrones arquitecturales y capas del sistema | Implementado |
-| **Diseño** | [`docs/ingenieria/diseno/PATRONES.md`](ingenieria/diseno/PATRONES.md) | Implementación de DTO, DAO vs Repository, MVC y principios SOLID con clases reales | Implementado |
-| **Diseño** | [`docs/ingenieria/diseno/DIAGRAMA_CLASES.md`](ingenieria/diseno/DIAGRAMA_CLASES.md) | Diagramas de clases orientados a objetos (entidades, DTOs, servicios, repos, controladores) | Implementado |
-| **Base de Datos** | [`docs/ingenieria/base-datos/MODELO_DATOS.md`](ingenieria/base-datos/MODELO_DATOS.md) | Esquema relacional de tablas, llaves foráneas y reglas de integridad | Implementado |
-| **Base de Datos** | [`docs/ingenieria/base-datos/MODELO_LOGICO_FISICO.md`](ingenieria/base-datos/MODELO_LOGICO_FISICO.md) | Diagrama Entidad-Relación (erDiagram Mermaid), modelo lógico y modelo físico con índices | Implementado |
-| **Base de Datos** | [`docs/ingenieria/base-datos/DICCIONARIO_DATOS.md`](ingenieria/base-datos/DICCIONARIO_DATOS.md) | Diccionario de datos exhaustivo de las 18 tablas con tipos, nulos, PK/FK y descripciones | Implementado |
-| **UX / UI** | [`docs/ingenieria/ux-ui/GUIA_ESTILOS_UX.md`](ingenieria/ux-ui/GUIA_ESTILOS_UX.md) | Arquitectura frontend desacoplada (HTML5/CSS3/Vanilla JS), pantallas y accesibilidad | Implementado |
-| **UX / UI** | [`docs/ingenieria/ux-ui/PROTOTIPOS.md`](ingenieria/ux-ui/PROTOTIPOS.md) | Inventario de las 34 páginas HTML por rol, componentes clave, endpoints y capturas | Implementado |
-| **Reportes** | [`docs/ingenieria/reportes/ESPECIFICACION_REPORTES.md`](ingenieria/reportes/ESPECIFICACION_REPORTES.md) | Generación PDF (OpenPDF) y carga masiva/exportación Excel (Apache POI) | Implementado |
-| **Reportes** | [`docs/ingenieria/reportes/MODELO_REPORTES.md`](ingenieria/reportes/MODELO_REPORTES.md) | Columnas por reporte, streaming SXSSFWorkbook, nomenclatura y flujos de ficheros | Implementado |
-| **Código Fuente** | [`docs/ingenieria/codigo-fuente/ESTRUCTURA_CODIGO.md`](ingenieria/codigo-fuente/ESTRUCTURA_CODIGO.md) | Mapeo de paquetes `com.travelink.*`, controladores, entidades, servicios y DAOs | Implementado |
-| **Código Fuente** | [`docs/ingenieria/codigo-fuente/RECURSOS_CODIGO.md`](ingenieria/codigo-fuente/RECURSOS_CODIGO.md) | Árbol de paquetes, justificación dependencias pom.xml, perfiles properties y logback | Implementado |
+| Submódulo | Documento / Ruta | Descripción | Ítem (Taller / Fase) | Estado |
+|---|---|---|:---:|:---:|
+| **General** | [`docs/ingenieria/README.md`](ingenieria/README.md) | Índice consolidado de artefactos de ingeniería de software | Talleres 1 a 6 | Implementado |
+| **Procesos** | [`docs/ingenieria/procesos/README.md`](ingenieria/procesos/README.md) | Índice de procesos de negocio de la plataforma | Taller 1 / Procesos | Implementado |
+| **Procesos** | [`docs/ingenieria/procesos/PROCESOS_NEGOCIO.md`](ingenieria/procesos/PROCESOS_NEGOCIO.md) | Flujos funcionales de reservas, comisiones (15%), agencias y tours | Taller 1 / Procesos | Implementado |
+| **Procesos** | [`docs/ingenieria/procesos/DIAGRAMAS_PROCESOS.md`](ingenieria/procesos/DIAGRAMAS_PROCESOS.md) | Diagramas de flujo y secuencia Mermaid de los procesos del código | Taller 1 / Procesos | Implementado |
+| **Diseño** | [`docs/ingenieria/diseno/README.md`](ingenieria/diseno/README.md) | Índice de diseño estructural y de clases | Taller 2 / Diseño | Implementado |
+| **Diseño** | [`docs/ingenieria/diseno/DISENO_SISTEMA.md`](ingenieria/diseno/DISENO_SISTEMA.md) | Patrones arquitecturales y capas del sistema | Taller 2 / Diseño | Implementado |
+| **Diseño** | [`docs/ingenieria/diseno/PATRONES.md`](ingenieria/diseno/PATRONES.md) | Implementación de DTO, DAO vs Repository, MVC y principios SOLID | Taller 2 / Diseño | Implementado |
+| **Diseño** | [`docs/ingenieria/diseno/DIAGRAMA_CLASES.md`](ingenieria/diseno/DIAGRAMA_CLASES.md) | Diagramas de clases orientados a objetos (entidades, DTOs, servicios, repos, controladores) | Taller 2 / Diseño | Implementado |
+| **Base de Datos** | [`docs/ingenieria/base-datos/README.md`](ingenieria/base-datos/README.md) | Índice del modelo de datos e integridad referencial | Taller 3 / Base de Datos | Implementado |
+| **Base de Datos** | [`docs/ingenieria/base-datos/MODELO_DATOS.md`](ingenieria/base-datos/MODELO_DATOS.md) | Esquema relacional de tablas, llaves foráneas y reglas de integridad | Taller 3 / Base de Datos | Implementado |
+| **Base de Datos** | [`docs/ingenieria/base-datos/MODELO_LOGICO_FISICO.md`](ingenieria/base-datos/MODELO_LOGICO_FISICO.md) | Diagrama Entidad-Relación (erDiagram Mermaid), modelo lógico y físico con índices | Taller 3 / Base de Datos | Implementado |
+| **Base de Datos** | [`docs/ingenieria/base-datos/DICCIONARIO_DATOS.md`](ingenieria/base-datos/DICCIONARIO_DATOS.md) | Diccionario de datos exhaustivo de las 18 tablas con tipos, PK/FK y nulos | Taller 3 / Base de Datos | Implementado |
+| **UX / UI** | [`docs/ingenieria/ux-ui/README.md`](ingenieria/ux-ui/README.md) | Índice de interfaces de usuario y experiencia visual | Taller 4 / UX-UI | Implementado |
+| **UX / UI** | [`docs/ingenieria/ux-ui/GUIA_ESTILOS_UX.md`](ingenieria/ux-ui/GUIA_ESTILOS_UX.md) | Arquitectura frontend desacoplada (HTML5/CSS3/Vanilla JS), accesibilidad | Taller 4 / UX-UI | Implementado |
+| **UX / UI** | [`docs/ingenieria/ux-ui/PROTOTIPOS.md`](ingenieria/ux-ui/PROTOTIPOS.md) | Inventario de las 34 páginas HTML por rol, componentes clave y endpoints | Taller 4 / UX-UI | Implementado |
+| **Reportes** | [`docs/ingenieria/reportes/README.md`](ingenieria/reportes/README.md) | Índice de especificación y arquitectura de reportes | Taller 5 / Reportes | Implementado |
+| **Reportes** | [`docs/ingenieria/reportes/ESPECIFICACION_REPORTES.md`](ingenieria/reportes/ESPECIFICACION_REPORTES.md) | Generación PDF (OpenPDF) y carga masiva/exportación Excel (Apache POI) | Taller 5 / Reportes | Implementado |
+| **Reportes** | [`docs/ingenieria/reportes/MODELO_REPORTES.md`](ingenieria/reportes/MODELO_REPORTES.md) | Columnas por reporte, streaming SXSSFWorkbook, nomenclatura y ficheros | Taller 5 / Reportes | Implementado |
+| **Código Fuente** | [`docs/ingenieria/codigo-fuente/README.md`](ingenieria/codigo-fuente/README.md) | Índice de organización y modularización del código fuente | Taller 6 / Código | Implementado |
+| **Código Fuente** | [`docs/ingenieria/codigo-fuente/ESTRUCTURA_CODIGO.md`](ingenieria/codigo-fuente/ESTRUCTURA_CODIGO.md) | Mapeo de paquetes `com.travelink.*`, controladores, entidades, servicios y DAOs | Taller 6 / Código | Implementado |
+| **Código Fuente** | [`docs/ingenieria/codigo-fuente/RECURSOS_CODIGO.md`](ingenieria/codigo-fuente/RECURSOS_CODIGO.md) | Árbol de paquetes, justificación pom.xml, perfiles properties y logback | Taller 6 / Código | Implementado |
 
 ---
 
 ## 5. Auditoría y Seguridad del Software (`docs/seguridad/`)
 
-| Módulo | Documento | Descripción | Estado |
-|---|---|---|:---:|
-| **Índice** | [`docs/seguridad/README.md`](seguridad/README.md) | Índice general del módulo de seguridad | Implementado |
-| **Plan Maestro** | [`docs/seguridad/01-plan/PLAN_PRUEBAS_SEGURIDAD.md`](seguridad/01-plan/PLAN_PRUEBAS_SEGURIDAD.md) | Estrategia, alcance, 8 criterios de rúbrica, cronograma S1-S6 y matriz RACI | Implementado |
-| **SAST** | [`docs/seguridad/02-analisis/ANALISIS_ESTATICO.md`](seguridad/02-analisis/ANALISIS_ESTATICO.md) | Inspección estática de código fuente y configuraciones de Spring Security | Implementado |
-| **Seguridad Java** | [`docs/seguridad/02-analisis/CONSIDERACIONES_SEGURIDAD_JAVA.md`](seguridad/02-analisis/CONSIDERACIONES_SEGURIDAD_JAVA.md) | Resumen de SecurityConfig (BCrypt, CSRF, CORS, RBAC, sesiones) vinculado a H-01..H-09 y CVEs | Implementado |
-| **Superficie** | [`docs/seguridad/02-analisis/mapa-endpoints.md`](seguridad/02-analisis/mapa-endpoints.md) | Inventario de 56 endpoints, métodos HTTP, handlers y roles requeridos | Implementado |
-| **SCA** | [`docs/seguridad/02-analisis/tabla-dependencias-cve.md`](seguridad/02-analisis/tabla-dependencias-cve.md) | Catálogo de 179 CVEs y estado de remediación tras Spring Boot 3.3.13 | Implementado |
-| **ZAP Triaje** | [`docs/seguridad/02-analisis/VALIDACION_FALSOS_POSITIVOS.md`](seguridad/02-analisis/VALIDACION_FALSOS_POSITIVOS.md) | Triaje de las 16 alertas ZAP (TP/FP/Info) con 3 validaciones HTTP manuales | Implementado |
-| **Fuzzing** | [`docs/seguridad/02-analisis/INFORME_FUZZING_RESILIENCIA.md`](seguridad/02-analisis/INFORME_FUZZING_RESILIENCIA.md) | Análisis de resiliencia FFUF: 5 respuestas HTTP 500 y ruta con status 0 | Implementado |
-| **Hallazgos** | [`docs/seguridad/03-hallazgos/`](seguridad/03-hallazgos/) | Fichas técnicas individuales H-01 a H-09 con severidades CVSS | Implementado |
-| **PoCs** | [`docs/seguridad/04-poc/`](seguridad/04-poc/) | 9 guías de explotación técnica reproducibles con evidencias reales | Implementado |
-| **Informe Final** | [`docs/seguridad/05-informe/INFORME_FINAL.md`](seguridad/05-informe/INFORME_FINAL.md) | Reporte ejecutivo consolidado, carga JMeter y plan de remediación | Implementado |
-| **Rúbrica** | [`docs/seguridad/05-informe/CHECKLIST_RUBRICA.md`](seguridad/05-informe/CHECKLIST_RUBRICA.md) | Matriz oficial contra los 8 criterios de evaluación académica (105/100 pts) | Implementado |
-| **Cuentas** | [`docs/seguridad/05-informe/CUENTAS_PRUEBA.md`](seguridad/05-informe/CUENTAS_PRUEBA.md) | Credenciales sintéticas y roles del seed local de pruebas | Implementado |
-| **Sustentación** | [`docs/seguridad/05-informe/PRESENTACION_BREVE.md`](seguridad/05-informe/PRESENTACION_BREVE.md) | Guion de defensa técnica de 10 diapositivas para exposición | Implementado |
+| Submódulo | Documento / Ruta | Descripción | Ítem (Taller / Fase) | Estado |
+|---|---|---|:---:|:---:|
+| **Índice** | [`docs/seguridad/README.md`](seguridad/README.md) | Índice general del módulo de seguridad y auditoría | Talleres 7 a 11 | Implementado |
+| **Plan Maestro** | [`docs/seguridad/01-plan/README.md`](seguridad/01-plan/README.md) | Índice del plan de auditoría de seguridad | Taller 7 / Plan | Implementado |
+| **Plan Maestro** | [`docs/seguridad/01-plan/PLAN_PRUEBAS_SEGURIDAD.md`](seguridad/01-plan/PLAN_PRUEBAS_SEGURIDAD.md) | Estrategia, alcance, 8 criterios de rúbrica, cronograma S1-S6 y RACI | Taller 7 / Plan | Implementado |
+| **Análisis** | [`docs/seguridad/02-analisis/README.md`](seguridad/02-analisis/README.md) | Índice de análisis estático, dependencias y triaje | Talleres 8 y 9 | Implementado |
+| **SAST** | [`docs/seguridad/02-analisis/ANALISIS_ESTATICO.md`](seguridad/02-analisis/ANALISIS_ESTATICO.md) | Inspección estática de código fuente y configuraciones de Spring Security | Taller 8 / SAST | Implementado |
+| **Seguridad Java** | [`docs/seguridad/02-analisis/CONSIDERACIONES_SEGURIDAD_JAVA.md`](seguridad/02-analisis/CONSIDERACIONES_SEGURIDAD_JAVA.md) | Resumen SecurityConfig (BCrypt, CSRF, CORS, RBAC) vinculado a H-01..H-09 | Taller 8 / Seguridad Java | Implementado |
+| **Superficie** | [`docs/seguridad/02-analisis/mapa-endpoints.md`](seguridad/02-analisis/mapa-endpoints.md) | Inventario de 56 endpoints, métodos HTTP, handlers y roles requeridos | Taller 8 / Superficie | Implementado |
+| **SCA** | [`docs/seguridad/02-analisis/tabla-dependencias-cve.md`](seguridad/02-analisis/tabla-dependencias-cve.md) | Catálogo de 179 CVEs y estado de remediación tras Spring Boot 3.3.13 | Taller 8 / SCA | Implementado |
+| **ZAP Triaje** | [`docs/seguridad/02-analisis/VALIDACION_FALSOS_POSITIVOS.md`](seguridad/02-analisis/VALIDACION_FALSOS_POSITIVOS.md) | Triaje de las 16 alertas ZAP (TP/FP/Info) con validaciones HTTP manuales | Taller 9 / DAST | Implementado |
+| **Fuzzing** | [`docs/seguridad/02-analisis/INFORME_FUZZING_RESILIENCIA.md`](seguridad/02-analisis/INFORME_FUZZING_RESILIENCIA.md) | Análisis de resiliencia FFUF: 5 respuestas HTTP 500 y status 0 | Taller 11 / Fuzzing | Implementado |
+| **Hallazgos** | [`docs/seguridad/03-hallazgos/README.md`](seguridad/03-hallazgos/README.md) | Índice de las 9 vulnerabilidades identificadas (H-01 a H-09) | Taller 10 / Hallazgos | Implementado |
+| **Hallazgos** | [`docs/seguridad/03-hallazgos/H-01.md`](seguridad/03-hallazgos/H-01.md) a `H-09.md` | Fichas técnicas individuales H-01 a H-09 con severidades CVSS | Taller 10 / Hallazgos | Implementado |
+| **PoCs** | [`docs/seguridad/04-poc/README.md`](seguridad/04-poc/README.md) | Índice de pruebas de concepto reproducibles | Taller 10 / PoCs | Implementado |
+| **PoCs** | [`docs/seguridad/04-poc/PoC-01-IDOR.md`](seguridad/04-poc/PoC-01-IDOR.md) a `PoC-09` | 9 guías de explotación técnica reproducibles con evidencias reales | Taller 10 / PoCs | Implementado |
+| **Informe** | [`docs/seguridad/05-informe/README.md`](seguridad/05-informe/README.md) | Índice de informes ejecutivos y entregables de cierre | Taller 12 / Informe | Implementado |
+| **Informe** | [`docs/seguridad/05-informe/INFORME_FINAL.md`](seguridad/05-informe/INFORME_FINAL.md) | Reporte ejecutivo consolidado, carga JMeter y plan de remediación | Taller 12 / Informe | Implementado |
+| **Rúbrica** | [`docs/seguridad/05-informe/CHECKLIST_RUBRICA.md`](seguridad/05-informe/CHECKLIST_RUBRICA.md) | Matriz oficial contra los 8 criterios de evaluación académica (105/100 pts) | Taller 12 / Rúbrica | Implementado |
+| **Cuentas** | [`docs/seguridad/05-informe/CUENTAS_PRUEBA.md`](seguridad/05-informe/CUENTAS_PRUEBA.md) | Credenciales sintéticas y roles del seed local de pruebas | Taller 7 / Cuentas | Implementado |
+| **Sustentación** | [`docs/seguridad/05-informe/PRESENTACION_BREVE.md`](seguridad/05-informe/PRESENTACION_BREVE.md) | Guion de defensa técnica de 10 diapositivas para exposición rápida | Taller 12 / Sustentación | Implementado |
 
 ---
 
-## 6. Aseguramiento de Calidad y Pruebas (`docs/pruebas-software/` y `pruebas/`)
+## 6. Pruebas de Software y Aseguramiento de Calidad (`docs/pruebas-software/` y `pruebas/`)
 
-| Activo / Ruta | Tipo | Descripción | Estado |
-|---|---|---|:---:|
-| [`docs/pruebas-software/README.md`](pruebas-software/README.md) | Índice | Índice del módulo de pruebas de software | Implementado |
-| [`docs/pruebas-software/ESTRATEGIA_PRUEBAS.md`](pruebas-software/ESTRATEGIA_PRUEBAS.md) | Estrategia | Pirámide de pruebas, 20 unitarias (JUnit 5/Mockito), Testcontainers y JaCoCo | Implementado |
-| [`pruebas/README.md`](../pruebas/README.md) | Manual | Manual operativo de pruebas, acceso `app` vs `localhost` y orden de ejecución | Implementado |
-| [`pruebas/entorno/reset-db.ps1`](../pruebas/entorno/reset-db.ps1) / [`.sh`](../pruebas/entorno/reset-db.sh) | Entorno | Reinicio controlado de contenedores y volúmenes Docker | Implementado |
-| [`pruebas/entorno/seed.ps1`](../pruebas/entorno/seed.ps1) / [`.sh`](../pruebas/entorno/seed.sh) | Entorno | Carga de datos sintéticos de prueba | Implementado |
-| [`pruebas/seguridad/scripts/`](../pruebas/seguridad/scripts/) | Scripts | Scripts de escaneo (SCA, Nmap, Nikto, ZAP, FFUF, SQLMap) | Implementado |
-| [`pruebas/rendimiento/scripts/`](../pruebas/rendimiento/scripts/) | Scripts | Automatización de pruebas de carga con Apache JMeter (100, 300, 500 hilos) | Implementado |
-| [`pruebas/evidencias/`](../pruebas/evidencias/) | Evidencias | Reportes generados (Dependency-Check, FFUF, JMeter, Nmap, Nikto, SQLMap, ZAP) | Implementado |
-| [`pruebas/evidencias/integracion-testcontainers.txt`](../pruebas/evidencias/integracion-testcontainers.txt) | Evidencia | Salida de ejecución JUnit 5 de `ReservaPersistenciaIntegracionTest` con Docker | Implementado |
+| Activo / Ruta | Tipo | Descripción | Ítem (Taller / Fase) | Estado |
+|---|---|---|:---:|:---:|
+| [`docs/pruebas-software/README.md`](pruebas-software/README.md) | Índice | Índice del módulo de aseguramiento de calidad y pruebas | Taller 12 / Pruebas | Implementado |
+| [`docs/pruebas-software/PLAN_PRUEBAS_SOFTWARE.md`](pruebas-software/PLAN_PRUEBAS_SOFTWARE.md) | Plan Maestro | Plan de pruebas, 20 unitarias, Testcontainers, JMeter, ZAP y JaCoCo | Taller 12 / Pruebas | Implementado |
+| [`docs/pruebas-software/ESTRATEGIA_PRUEBAS.md`](pruebas-software/ESTRATEGIA_PRUEBAS.md) | Estrategia | Pirámide de pruebas, suite de 20 casos unitarios y consideraciones CI | Taller 12 / Pruebas | Implementado |
+| [`pruebas/README.md`](../pruebas/README.md) | Manual | Manual operativo de pruebas, acceso `app` vs `localhost` y orden de ejecución | Taller 7 / Manual Pruebas | Implementado |
+| [`pruebas/entorno/reset-db.ps1`](../pruebas/entorno/reset-db.ps1) / [`.sh`](../pruebas/entorno/reset-db.sh) | Entorno | Reinicio controlado de contenedores y volúmenes Docker con guard de seguridad | Taller 7 / Entorno | Implementado |
+| [`pruebas/entorno/seed.ps1`](../pruebas/entorno/seed.ps1) / [`.sh`](../pruebas/entorno/seed.sh) | Entorno | Carga de datos sintéticos con hashes BCrypt reales | Taller 7 / Entorno | Implementado |
+| [`pruebas/seguridad/scripts/`](../pruebas/seguridad/scripts/) | Scripts | Scripts de escaneo (SCA, Nmap, Nikto, ZAP, FFUF, SQLMap) | Talleres 8 a 10 | Implementado |
+| [`pruebas/rendimiento/scripts/`](../pruebas/rendimiento/scripts/) | Scripts | Automatización de pruebas de carga con Apache JMeter (100, 300, 500 hilos) | Taller 11 / Rendimiento | Implementado |
+| [`pruebas/evidencias/`](../pruebas/evidencias/) | Evidencias | Reportes generados (Dependency-Check, FFUF, JMeter, Nmap, Nikto, SQLMap, ZAP) | Talleres 8 a 11 | Implementado |
+| [`pruebas/evidencias/integracion-testcontainers.txt`](../pruebas/evidencias/integracion-testcontainers.txt) | Evidencia | Salida de ejecución JUnit 5 de `ReservaPersistenciaIntegracionTest` | Taller 12 / Integración | Implementado |
 
 ---
 
-## 7. Control de Versiones (`docs/control-versiones/`)
+## 7. Control de Versiones y Gestión en Git (`docs/control-versiones/`)
 
-| Documento | Descripción | Estado |
-|---|---|:---:|
-| [`docs/control-versiones/README.md`](control-versiones/README.md) | Índice de políticas de control de versiones | Implementado |
-| [`docs/control-versiones/FLUJO_GIT.md`](control-versiones/FLUJO_GIT.md) | Estrategia de ramas (GitFlow/Trunk), commits semánticos y reglas de protección | Implementado |
+| Documento | Tipo | Descripción | Ítem (Taller / Fase) | Estado |
+|---|---|---|:---:|:---:|
+| [`docs/control-versiones/README.md`](control-versiones/README.md) | Índice | Índice de políticas de control de versiones y trazabilidad | Taller 12 / Git | Implementado |
+| [`docs/control-versiones/CONTROL_VERSIONES.md`](control-versiones/CONTROL_VERSIONES.md) | Especificación | Remoto, ramas, PRs (#1, #3, #4, #6), grafo de 40 commits y rollback real | Taller 12 / Git | Implementado |
+| [`docs/control-versiones/FLUJO_GIT.md`](control-versiones/FLUJO_GIT.md) | Flujo | Estrategia de ramas (GitHub Flow), commits semánticos y reglas de protección | Taller 12 / Git | Implementado |
 
 ---
 
 ## 8. Despliegue y Operaciones (`docs/despliegue/` y `despliegue/`)
 
-| Activo / Ruta | Tipo | Descripción | Estado |
-|---|---|---|:---:|
-| [`docs/despliegue/README.md`](despliegue/README.md) | Índice | Índice de guías operativas de despliegue | Implementado |
-| [`docs/despliegue/PLAN_DESPLIEGUE.md`](despliegue/PLAN_DESPLIEGUE.md) | Plan Maestro | Plan según Sesión 15: fundamentos, JAR/WAR, Nginx TLS, Docker prod, JVM tuning, rollback | Implementado |
-| [`docs/despliegue/GUIA_DESPLIEGUE.md`](despliegue/GUIA_DESPLIEGUE.md) | Guía Operativa | Procedimiento de despliegue continuo, docker-compose prod, systemd y rollback | Implementado |
-| [`despliegue/README.md`](../despliegue/README.md) | Infraestructura | Especificación de la carpeta ejecutable de despliegue | Implementado |
-| [`despliegue/docker/docker-compose.prod.yml`](../despliegue/docker/docker-compose.prod.yml) | Orquestación | Configuración multicontenedor de producción con Nginx perimetral | Implementado |
-| [`despliegue/servidor/nginx/travelink.conf`](../despliegue/servidor/nginx/travelink.conf) | Servidor Web | Proxy inverso HTTPS con terminación TLS, HSTS, CSP y hardening OWASP | Implementado |
-| [`despliegue/servidor/travelink.service`](../despliegue/servidor/travelink.service) | Servicio OS | Archivo de unidad systemd para ejecución standalone del JAR en Linux con sandboxing | Implementado |
-| [`despliegue/servidor/setup-servidor.sh`](../despliegue/servidor/setup-servidor.sh) | Scripts | Aprovisionamiento automatizado de servidor Linux (Java 21, UFW, Nginx) | Implementado |
-| [`despliegue/scripts/deploy.sh`](../despliegue/scripts/deploy.sh) / [`.ps1`](../despliegue/scripts/deploy.ps1) | Scripts | Automatización de despliegue, healthcheck y smoke test HTTP | Implementado |
-| [`despliegue/scripts/rollback.sh`](../despliegue/scripts/rollback.sh) / [`.ps1`](../despliegue/scripts/rollback.ps1) | Scripts | Procedimiento automatizado de reversión a versión anterior estable o tag | Implementado |
-| [`despliegue/maven/build.sh`](../despliegue/maven/build.sh) / [`.ps1`](../despliegue/maven/build.ps1) | Scripts | Empaquetado de producción y verificación de checksum SHA-256 | Implementado |
-| [`despliegue/maven/settings.xml.example`](../despliegue/maven/settings.xml.example) | Configuración | Plantilla corporativa de repositorios Maven y credenciales desacopladas | Implementado |
-| [`despliegue/evidencias/antes/despliegue-local-3.3.13.txt`](../despliegue/evidencias/antes/despliegue-local-3.3.13.txt) | Evidencia | Evidencia histórica de despliegue local inicial con Spring Boot 3.3.13 | Implementado |
-| [`despliegue/evidencias/cabeceras-despues-tls.txt`](../despliegue/evidencias/cabeceras-despues-tls.txt) | Evidencia | Cabeceras HTTP reales emitidas por Nginx con TLS, HSTS y CSP | Implementado |
-| [`despliegue/evidencias/comparativa-cabeceras-antes-despues.txt`](../despliegue/evidencias/comparativa-cabeceras-antes-despues.txt) | Evidencia | Matriz comparativa de seguridad perimetral antes vs después del despliegue | Implementado |
-| [`despliegue/evidencias/prueba-rollback.txt`](../despliegue/evidencias/prueba-rollback.txt) | Evidencia | Ejecución real y verificación de convergencia del script de rollback | Implementado |
+| Activo / Ruta | Tipo | Descripción | Ítem (Taller / Fase) | Estado |
+|---|---|---|:---:|:---:|
+| [`docs/despliegue/README.md`](despliegue/README.md) | Índice | Índice de planes y guías operativas de despliegue | Despliegue / Índice | Implementado |
+| [`docs/despliegue/PLAN_DESPLIEGUE.md`](despliegue/PLAN_DESPLIEGUE.md) | Plan Maestro | Plan según Sesión 15: fundamentos, JAR/WAR, Nginx TLS, Docker prod, JVM, CI/CD | Despliegue / Plan Maestro | Implementado |
+| [`docs/despliegue/GUIA_DESPLIEGUE.md`](despliegue/GUIA_DESPLIEGUE.md) | Guía Operativa | Procedimiento de despliegue continuo, docker-compose prod, systemd y rollback | Despliegue / Guía | Implementado |
+| [`despliegue/README.md`](../despliegue/README.md) | Infraestructura | Especificación de la carpeta ejecutable de despliegue e infraestructura | Despliegue / Infraestructura | Implementado |
+| [`despliegue/docker/docker-compose.prod.yml`](../despliegue/docker/docker-compose.prod.yml) | Orquestación | Configuración multicontenedor de producción con Nginx perimetral | Despliegue / Docker | Implementado |
+| [`despliegue/servidor/nginx/travelink.conf`](../despliegue/servidor/nginx/travelink.conf) | Servidor Web | Proxy inverso HTTPS con terminación TLS, HSTS, CSP y hardening OWASP | Despliegue / Nginx TLS | Implementado |
+| [`despliegue/servidor/travelink.service`](../despliegue/servidor/travelink.service) | Servicio OS | Archivo de unidad systemd para ejecución standalone del JAR con sandboxing | Despliegue / Systemd | Implementado |
+| [`despliegue/servidor/setup-servidor.sh`](../despliegue/servidor/setup-servidor.sh) | Scripts | Aprovisionamiento automatizado de servidor Linux (Java 21, UFW, Nginx) | Despliegue / Servidor | Implementado |
+| [`despliegue/scripts/deploy.sh`](../despliegue/scripts/deploy.sh) / [`.ps1`](../despliegue/scripts/deploy.ps1) | Scripts | Automatización de despliegue, healthcheck y smoke test HTTP | Despliegue / Scripts | Implementado |
+| [`despliegue/scripts/rollback.sh`](../despliegue/scripts/rollback.sh) / [`.ps1`](../despliegue/scripts/rollback.ps1) | Scripts | Procedimiento automatizado de reversión a versión anterior estable o tag | Despliegue / Scripts | Implementado |
+| [`despliegue/maven/build.sh`](../despliegue/maven/build.sh) / [`.ps1`](../despliegue/maven/build.ps1) | Scripts | Empaquetado de producción y verificación de checksum SHA-256 | Despliegue / Maven | Implementado |
+| [`despliegue/maven/settings.xml.example`](../despliegue/maven/settings.xml.example) | Configuración | Plantilla corporativa de repositorios Maven y credenciales desacopladas | Despliegue / Maven | Implementado |
+| [`despliegue/evidencias/antes/despliegue-local-3.3.13.txt`](../despliegue/evidencias/antes/despliegue-local-3.3.13.txt) | Evidencia | Evidencia histórica de despliegue local inicial con Spring Boot 3.3.13 | Despliegue / Evidencia | Implementado |
+| [`despliegue/evidencias/cabeceras-despues-tls.txt`](../despliegue/evidencias/cabeceras-despues-tls.txt) | Evidencia | Cabeceras HTTP reales emitidas por Nginx con TLS, HSTS y CSP | Despliegue / Evidencia | Implementado |
+| [`despliegue/evidencias/comparativa-cabeceras-antes-despues.txt`](../despliegue/evidencias/comparativa-cabeceras-antes-despues.txt) | Evidencia | Matriz comparativa de seguridad perimetral antes vs después del despliegue | Despliegue / Evidencia | Implementado |
+| [`despliegue/evidencias/prueba-rollback.txt`](../despliegue/evidencias/prueba-rollback.txt) | Evidencia | Ejecución real y verificación de convergencia del script de rollback | Despliegue / Evidencia | Implementado |
+| [`despliegue/evidencias/demostracion-rollback-git.txt`](../despliegue/evidencias/demostracion-rollback-git.txt) | Evidencia | Salida de rollback práctico en Git (revert, restore, checkout) | Taller 12 / Despliegue | Implementado |
+| [`despliegue/evidencias/grafo-git.txt`](../despliegue/evidencias/grafo-git.txt) | Evidencia | Grafo de 40 commits del repositorio (`git log --graph --oneline --all`) | Taller 12 / Despliegue | Implementado |
 
 ---
 
-## 9. Exposición y Sustentación (`docs/exposicion/`)
+## 9. Exposición y Sustentación Técnica (`docs/exposicion/`)
 
-| Documento | Descripción | Estado |
-|---|---|:---:|
-| [`docs/exposicion/README.md`](exposicion/README.md) | Índice de materiales de presentación académica | Implementado |
-| [`docs/exposicion/GUIA_EXPOSICION.md`](exposicion/GUIA_EXPOSICION.md) | Guía metodológica de defensa, tiempos por sección, demostración en vivo y preguntas | Implementado |
+| Documento | Tipo | Descripción | Ítem (Taller / Fase) | Estado |
+|---|---|---|:---:|:---:|
+| [`docs/exposicion/README.md`](exposicion/README.md) | Índice | Índice de materiales de presentación académica | Taller 12 / Exposición | Implementado |
+| [`docs/exposicion/GUION_EXPOSICION.md`](exposicion/GUION_EXPOSICION.md) | Guion Maestro | Guion de 14 diapositivas ejecutivas y guion de demo en vivo vinculando código | Taller 12 / Exposición | Implementado |
+| [`docs/exposicion/GUIA_EXPOSICION.md`](exposicion/GUIA_EXPOSICION.md) | Guía Metodológica | Guía metodológica de defensa, tiempos, entorno y preguntas frecuentes | Taller 12 / Exposición | Implementado |
