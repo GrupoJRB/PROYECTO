@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     Script de rollback para el entorno de producción de TRAVELINK.
 .DESCRIPTION

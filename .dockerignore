@@ -16,4 +16,5 @@ logs/
 .idea/
 docs/
 pruebas/evidencias/
+despliegue/evidencias/
 pruebas/**/cookies*.txt
