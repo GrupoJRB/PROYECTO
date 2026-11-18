@@ -15,6 +15,7 @@ Este documento es el catálogo maestro y punto único de referencia de todos los
 | [`.trivyignore`](../.trivyignore) | Seguridad SCA | 9 excepciones justificadas de CVEs críticos (vencimiento `exp:2027-06-30`) | Taller 8 / SCA | Implementado / Verificado |
 | [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) | DevSecOps CI | Pipeline CI: build, tests, SCA Trivy (v0.36.0) y DAST ZAP | Taller 12 / CI-CD | Implementado / Verificado |
 | [`.github/workflows/deploy.yml`](../.github/workflows/deploy.yml) | CD Pipeline | Pipeline CD: build, tests, Docker GHCR, smoke test y compuerta prod | Despliegue / CD | Implementado / Verificado |
+| [`render.yaml`](../render.yaml) | Blueprint Render | Especificación IaC para despliegue automático en contenedor Docker en Render | Despliegue / Cloud | Implementado / Verificado |
 
 ---
 

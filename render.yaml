@@ -1,0 +1,37 @@
+# ==============================================================================
+# RENDER BLUEPRINT SPECIFICATION — TRAVELINK
+# Despliegue automatizado de la aplicación Spring Boot en contenedor Docker
+# Documentación oficial: https://render.com/docs/blueprint-spec
+# ==============================================================================
+services:
+  - type: web
+    name: travelink-app
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /actuator/health
+    autoDeploy: true
+
+    envVars:
+      # Puerto de escucha del servicio
+      - key: PORT
+        value: 8080
+
+      # Perfil de Spring Boot activo
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+
+      # Credenciales de conexión a MySQL (Aiven Cloud o instancia externa)
+      # sync: false indica a Render que deben configurarse en el Dashboard de forma segura
+      - key: DB_URL
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+
+      # Parámetros JVM optimizados para contenedores y límite de memoria
+      - key: JAVA_OPTS
+        value: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC -Dfile.encoding=UTF-8"

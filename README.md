@@ -154,7 +154,15 @@ docker compose --env-file .env -f despliegue/docker/docker-compose.prod.yml up -
 
 ---
 
-## 🧪 Ejecución de Pruebas Automatizadas
+### Opción 4: Despliegue en la Nube con Render (Docker Blueprint)
+El repositorio incluye el archivo de infraestructura como código [`render.yaml`](render.yaml) para desplegar el contenedor automáticamente en Render:
+1. Conecta el repositorio de GitHub en [Render Dashboard](https://dashboard.render.com/).
+2. Selecciona **Blueprints** ➡️ **New Blueprint Instance** y elige este repositorio.
+3. Render detectará automáticamente `render.yaml` y construirá la imagen con el `Dockerfile`.
+4. Configura las variables de base de datos (`DB_URL`, `DB_USERNAME`, `DB_PASSWORD`) en el panel de Render apuntando a tu instancia MySQL (ej. Aiven Cloud).
+5. La aplicación iniciará con HTTPS público automático y verificación de salud en `/actuator/health`.
+
+---
 
 ```bash
 # Ejecutar la suite completa de 20 pruebas unitarias con reporte de cobertura JaCoCo:
