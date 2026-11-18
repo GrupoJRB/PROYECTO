@@ -1,7 +1,8 @@
-# Guía para la Exposición y Defensa del Proyecto
+# Exposición y Sustentación Técnica
 
-Índice de documentación para la presentación oral, demostración en vivo y defensa técnica de TRAVELINK.
+Índice de materiales, guiones de presentación y recursos para la defensa técnica del proyecto TRAVELINK ante el comité evaluador.
 
 ## Contenido
 
-- [GUIA_EXPOSICION.md](GUIA_EXPOSICION.md): Guion de presentación, estructura temática de la defensa, checklist de la demostración en vivo (Live Demo) y matriz de respuestas a preguntas frecuentes del jurado.
+- [GUION_EXPOSICION.md](GUION_EXPOSICION.md): Guion ejecutivo de 14 diapositivas y guion de demostración práctica en vivo (*live demo*) con vinculación directa a evidencias del repositorio.
+- [GUIA_EXPOSICION.md](GUIA_EXPOSICION.md): Guía metodológica de defensa, distribución de tiempos, preparación del entorno y preguntas frecuentes.
