@@ -1,6 +1,9 @@
-# Diseño del Sistema y Patrones de Software — TRAVELINK 🏛️
+# Módulo de Diseño de Software
 
-Este directorio detalla la arquitectura de software interna, patrones de diseño aplicados y decisiones técnicas de desacoplamiento de la plataforma **TRAVELINK**.
+Índice de documentación sobre patrones de arquitectura, diagramas de diseño y modelado orientado a objetos de TRAVELINK.
 
-- **Documento Principal:** [`DISENO_SISTEMA.md`](DISENO_SISTEMA.md)
-- **Alcance Técnico:** Arquitectura en capas (Layered Architecture), dualidad de persistencia (Spring Data JPA vs JDBC Nativo PreparedStatement con HikariCP), patrón Adapter para controladores HTTP y filtros de seguridad en cadena.
+## Contenido
+
+- [DISENO_SISTEMA.md](DISENO_SISTEMA.md): Visión general de los patrones arquitecturales y capas del sistema.
+- [PATRONES.md](PATRONES.md): Implementación detallada de DTO, Repository vs DAO, MVC y principios SOLID con clases reales del proyecto.
+- [DIAGRAMA_CLASES.md](DIAGRAMA_CLASES.md): Diagramas de clases agrupados por capas (entidades, DTO, servicios, repositorios y controladores).
