@@ -1,6 +1,9 @@
-# Base de Datos y Modelo Relacional — TRAVELINK 🗄️
+# Módulo de Base de Datos
 
-Este directorio contiene el diccionario de datos, diagrama entidad-relación y especificaciones de integridad referencial de la base de datos relacional de **TRAVELINK** (MySQL 8.0).
+Índice de documentación sobre el diseño, modelo relacional y diccionario de datos de TRAVELINK.
 
-- **Documento Principal:** [`MODELO_DATOS.md`](MODELO_DATOS.md)
-- **Alcance Técnico:** Diccionario exhaustivo de las 18 tablas, claves primarias y foráneas, restricciones de unicidad, tipos de datos, estrategia de índices y migración de esquemas (`sql/travelink_schema.sql` y `sql/datos_minimos.sql`).
+## Contenido
+
+- [MODELO_DATOS.md](MODELO_DATOS.md): Descripción de tablas relacionales, llaves foráneas y reglas de integridad.
+- [MODELO_LOGICO_FISICO.md](MODELO_LOGICO_FISICO.md): Diagrama Entidad-Relación (erDiagram Mermaid) de las 18 tablas, separación de modelo lógico y modelo físico con índices y restricciones.
+- [DICCIONARIO_DATOS.md](DICCIONARIO_DATOS.md): Diccionario exhaustivo de las 18 tablas con tipo de dato, nulos, llaves y descripciones.
