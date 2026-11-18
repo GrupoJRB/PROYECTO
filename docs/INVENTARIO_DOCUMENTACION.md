@@ -42,12 +42,20 @@ Este documento es el catálogo maestro y punto único de referencia de todos los
 | Módulo | Documento | Descripción | Estado |
 |---|---|---|:---:|
 | **General** | [`docs/ingenieria/README.md`](ingenieria/README.md) | Índice consolidado de artefactos de ingeniería de software | Implementado |
-| **Procesos** | [`docs/ingenieria/procesos/PROCESOS_NEGOCIO.md`](ingenieria/procesos/PROCESOS_NEGOCIO.md) | Flujos BPMN de reservas, cálculo de comisiones (15%), aprobación de agencias y tours | Implementado |
-| **Diseño** | [`docs/ingenieria/diseno/DISENO_SISTEMA.md`](ingenieria/diseno/DISENO_SISTEMA.md) | Patrones de diseño (MVC, Service Layer, Repository, Singleton, Adapter) | Implementado |
-| **Base de Datos** | [`docs/ingenieria/base-datos/MODELO_DATOS.md`](ingenieria/base-datos/MODELO_DATOS.md) | Diccionario de datos de 18 tablas, diagramas entidad-relación e índices | Implementado |
+| **Procesos** | [`docs/ingenieria/procesos/PROCESOS_NEGOCIO.md`](ingenieria/procesos/PROCESOS_NEGOCIO.md) | Flujos funcionales de reservas, comisiones (15%), aprobación de agencias y tours | Implementado |
+| **Procesos** | [`docs/ingenieria/procesos/DIAGRAMAS_PROCESOS.md`](ingenieria/procesos/DIAGRAMAS_PROCESOS.md) | Diagramas de flujo y secuencia Mermaid de los procesos reales del código | Implementado |
+| **Diseño** | [`docs/ingenieria/diseno/DISENO_SISTEMA.md`](ingenieria/diseno/DISENO_SISTEMA.md) | Patrones arquitecturales y capas del sistema | Implementado |
+| **Diseño** | [`docs/ingenieria/diseno/PATRONES.md`](ingenieria/diseno/PATRONES.md) | Implementación de DTO, DAO vs Repository, MVC y principios SOLID con clases reales | Implementado |
+| **Diseño** | [`docs/ingenieria/diseno/DIAGRAMA_CLASES.md`](ingenieria/diseno/DIAGRAMA_CLASES.md) | Diagramas de clases orientados a objetos (entidades, DTOs, servicios, repos, controladores) | Implementado |
+| **Base de Datos** | [`docs/ingenieria/base-datos/MODELO_DATOS.md`](ingenieria/base-datos/MODELO_DATOS.md) | Esquema relacional de tablas, llaves foráneas y reglas de integridad | Implementado |
+| **Base de Datos** | [`docs/ingenieria/base-datos/MODELO_LOGICO_FISICO.md`](ingenieria/base-datos/MODELO_LOGICO_FISICO.md) | Diagrama Entidad-Relación (erDiagram Mermaid), modelo lógico y modelo físico con índices | Implementado |
+| **Base de Datos** | [`docs/ingenieria/base-datos/DICCIONARIO_DATOS.md`](ingenieria/base-datos/DICCIONARIO_DATOS.md) | Diccionario de datos exhaustivo de las 18 tablas con tipos, nulos, PK/FK y descripciones | Implementado |
 | **UX / UI** | [`docs/ingenieria/ux-ui/GUIA_ESTILOS_UX.md`](ingenieria/ux-ui/GUIA_ESTILOS_UX.md) | Arquitectura frontend desacoplada (HTML5/CSS3/Vanilla JS), pantallas y accesibilidad | Implementado |
+| **UX / UI** | [`docs/ingenieria/ux-ui/PROTOTIPOS.md`](ingenieria/ux-ui/PROTOTIPOS.md) | Inventario de las 34 páginas HTML por rol, componentes clave, endpoints y capturas | Implementado |
 | **Reportes** | [`docs/ingenieria/reportes/ESPECIFICACION_REPORTES.md`](ingenieria/reportes/ESPECIFICACION_REPORTES.md) | Generación PDF (OpenPDF) y carga masiva/exportación Excel (Apache POI) | Implementado |
+| **Reportes** | [`docs/ingenieria/reportes/MODELO_REPORTES.md`](ingenieria/reportes/MODELO_REPORTES.md) | Columnas por reporte, streaming SXSSFWorkbook, nomenclatura y flujos de ficheros | Implementado |
 | **Código Fuente** | [`docs/ingenieria/codigo-fuente/ESTRUCTURA_CODIGO.md`](ingenieria/codigo-fuente/ESTRUCTURA_CODIGO.md) | Mapeo de paquetes `com.travelink.*`, controladores, entidades, servicios y DAOs | Implementado |
+| **Código Fuente** | [`docs/ingenieria/codigo-fuente/RECURSOS_CODIGO.md`](ingenieria/codigo-fuente/RECURSOS_CODIGO.md) | Árbol de paquetes, justificación dependencias pom.xml, perfiles properties y logback | Implementado |
 
 ---
 
@@ -58,6 +66,7 @@ Este documento es el catálogo maestro y punto único de referencia de todos los
 | **Índice** | [`docs/seguridad/README.md`](seguridad/README.md) | Índice general del módulo de seguridad | Implementado |
 | **Plan Maestro** | [`docs/seguridad/01-plan/PLAN_PRUEBAS_SEGURIDAD.md`](seguridad/01-plan/PLAN_PRUEBAS_SEGURIDAD.md) | Estrategia, alcance, 8 criterios de rúbrica, cronograma S1-S6 y matriz RACI | Implementado |
 | **SAST** | [`docs/seguridad/02-analisis/ANALISIS_ESTATICO.md`](seguridad/02-analisis/ANALISIS_ESTATICO.md) | Inspección estática de código fuente y configuraciones de Spring Security | Implementado |
+| **Seguridad Java** | [`docs/seguridad/02-analisis/CONSIDERACIONES_SEGURIDAD_JAVA.md`](seguridad/02-analisis/CONSIDERACIONES_SEGURIDAD_JAVA.md) | Resumen de SecurityConfig (BCrypt, CSRF, CORS, RBAC, sesiones) vinculado a H-01..H-09 y CVEs | Implementado |
 | **Superficie** | [`docs/seguridad/02-analisis/mapa-endpoints.md`](seguridad/02-analisis/mapa-endpoints.md) | Inventario de 56 endpoints, métodos HTTP, handlers y roles requeridos | Implementado |
 | **SCA** | [`docs/seguridad/02-analisis/tabla-dependencias-cve.md`](seguridad/02-analisis/tabla-dependencias-cve.md) | Catálogo de 179 CVEs y estado de remediación tras Spring Boot 3.3.13 | Implementado |
 | **ZAP Triaje** | [`docs/seguridad/02-analisis/VALIDACION_FALSOS_POSITIVOS.md`](seguridad/02-analisis/VALIDACION_FALSOS_POSITIVOS.md) | Triaje de las 16 alertas ZAP (TP/FP/Info) con 3 validaciones HTTP manuales | Implementado |
