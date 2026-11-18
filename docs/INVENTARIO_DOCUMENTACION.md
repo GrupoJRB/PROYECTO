@@ -110,15 +110,21 @@ Este documento es el catálogo maestro y punto único de referencia de todos los
 | Activo / Ruta | Tipo | Descripción | Estado |
 |---|---|---|:---:|
 | [`docs/despliegue/README.md`](despliegue/README.md) | Índice | Índice de guías operativas de despliegue | Implementado |
+| [`docs/despliegue/PLAN_DESPLIEGUE.md`](despliegue/PLAN_DESPLIEGUE.md) | Plan Maestro | Plan según Sesión 15: fundamentos, JAR/WAR, Nginx TLS, Docker prod, JVM tuning, rollback | Implementado |
 | [`docs/despliegue/GUIA_DESPLIEGUE.md`](despliegue/GUIA_DESPLIEGUE.md) | Guía Operativa | Procedimiento de despliegue continuo, docker-compose prod, systemd y rollback | Implementado |
 | [`despliegue/README.md`](../despliegue/README.md) | Infraestructura | Especificación de la carpeta ejecutable de despliegue | Implementado |
 | [`despliegue/docker/docker-compose.prod.yml`](../despliegue/docker/docker-compose.prod.yml) | Orquestación | Configuración multicontenedor de producción con Nginx perimetral | Implementado |
-| [`despliegue/servidor/nginx.conf`](../despliegue/servidor/nginx.conf) | Servidor Web | Proxy inverso con cabeceras de seguridad perimetral y compresión gzip | Implementado |
-| [`despliegue/servidor/travelink.service`](../despliegue/servidor/travelink.service) | Servicio OS | Archivo de unidad systemd para ejecución standalone del JAR en Linux | Implementado |
+| [`despliegue/servidor/nginx/travelink.conf`](../despliegue/servidor/nginx/travelink.conf) | Servidor Web | Proxy inverso HTTPS con terminación TLS, HSTS, CSP y hardening OWASP | Implementado |
+| [`despliegue/servidor/travelink.service`](../despliegue/servidor/travelink.service) | Servicio OS | Archivo de unidad systemd para ejecución standalone del JAR en Linux con sandboxing | Implementado |
+| [`despliegue/servidor/setup-servidor.sh`](../despliegue/servidor/setup-servidor.sh) | Scripts | Aprovisionamiento automatizado de servidor Linux (Java 21, UFW, Nginx) | Implementado |
 | [`despliegue/scripts/deploy.sh`](../despliegue/scripts/deploy.sh) / [`.ps1`](../despliegue/scripts/deploy.ps1) | Scripts | Automatización de despliegue, healthcheck y smoke test HTTP | Implementado |
-| [`despliegue/scripts/rollback.sh`](../despliegue/scripts/rollback.sh) / [`.ps1`](../despliegue/scripts/rollback.ps1) | Scripts | Procedimiento automatizado de reversión a versión anterior estable | Implementado |
+| [`despliegue/scripts/rollback.sh`](../despliegue/scripts/rollback.sh) / [`.ps1`](../despliegue/scripts/rollback.ps1) | Scripts | Procedimiento automatizado de reversión a versión anterior estable o tag | Implementado |
 | [`despliegue/maven/build.sh`](../despliegue/maven/build.sh) / [`.ps1`](../despliegue/maven/build.ps1) | Scripts | Empaquetado de producción y verificación de checksum SHA-256 | Implementado |
-| [`despliegue/evidencias/antes/despliegue-local-3.3.13.txt`](../despliegue/evidencias/antes/despliegue-local-3.3.13.txt) | Evidencia | Evidencia histórica de despliegue local exitoso con Spring Boot 3.3.13 | Implementado |
+| [`despliegue/maven/settings.xml.example`](../despliegue/maven/settings.xml.example) | Configuración | Plantilla corporativa de repositorios Maven y credenciales desacopladas | Implementado |
+| [`despliegue/evidencias/antes/despliegue-local-3.3.13.txt`](../despliegue/evidencias/antes/despliegue-local-3.3.13.txt) | Evidencia | Evidencia histórica de despliegue local inicial con Spring Boot 3.3.13 | Implementado |
+| [`despliegue/evidencias/cabeceras-despues-tls.txt`](../despliegue/evidencias/cabeceras-despues-tls.txt) | Evidencia | Cabeceras HTTP reales emitidas por Nginx con TLS, HSTS y CSP | Implementado |
+| [`despliegue/evidencias/comparativa-cabeceras-antes-despues.txt`](../despliegue/evidencias/comparativa-cabeceras-antes-despues.txt) | Evidencia | Matriz comparativa de seguridad perimetral antes vs después del despliegue | Implementado |
+| [`despliegue/evidencias/prueba-rollback.txt`](../despliegue/evidencias/prueba-rollback.txt) | Evidencia | Ejecución real y verificación de convergencia del script de rollback | Implementado |
 
 ---
 
