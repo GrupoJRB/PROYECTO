@@ -14,7 +14,7 @@ El presente documento define la estrategia, alcance, herramientas y metodología
 
 ### Objetivos Específicos:
 1. **Aislamiento y Reproducibilidad:** Garantizar un entorno de pruebas 100% reproducible y seguro mediante contenedores Docker vinculados a loopback (`127.0.0.1`), protegiendo cualquier entorno externo o de nube (prohibición estricta de conexión a Aiven).
-2. **Análisis de Dependencias (SCA):** Detectar componentes obsoletos y CVEs conocidos en la cadena de suministro de software (Maven/Java 21/Spring Boot 3.3.4).
+2. **Análisis de Dependencias (SCA):** Detectar componentes obsoletos y CVEs conocidos en la cadena de suministro de software (Maven/Java 21/Spring Boot; línea base inicial 3.3.4, actualizada a 3.3.13 en fase de remediación).
 3. **Escaneo Dinámico de Seguridad (DAST):** Auditar los endpoints expuestos mediante análisis dinámico automatizado (OWASP ZAP) y fuzzing de rutas (FFUF).
 4. **Verificación de Resiliencia y Carga:** Medir la resistencia y estabilidad del backend frente a concurrencia masiva (100, 300 y 500 usuarios) con Apache JMeter.
 5. **Auditoría de Inyecciones e Integridad:** Validar la resistencia contra inyecciones SQL controladas (SQLMap) y fallos de autorización (IDOR / BOLA / XSS / Backdoors).
@@ -47,7 +47,7 @@ Para evitar el uso de credenciales reales o datos personales, las pruebas se sus
 ### 2.3. Pruebas Unitarias vs Pruebas de Integración con Testcontainers
 La suite de pruebas automatizadas en `Springboot/test/` comprende 23 pruebas:
 - **20 Pruebas Unitarias:** Ejecutan sobre controladores y capas de servicio mediante mocks aislados (`AuthApiControllerTest`, `CalificacionServicioTest`, `ComisionServicioTest`, `ReservaCancelacionTest`, `ReservaServicioTest`), aprobadas al 100% (0 fallos, 0 errores).
-- **3 Pruebas de Integración (`ReservaPersistenciaIntegracionTest`):** Diseñadas para validar la persistencia contra un contenedor MySQL real gestionado mediante **Testcontainers**. La clase cuenta con la anotación `@Testcontainers(disabledWithoutDocker = true)`. En compilaciones locales o runners donde el socket de Docker no está enlazado directamente a la JVM de pruebas, Testcontainers omite de forma segura estas 3 pruebas (`Skipped: 3`), protegiendo el build unitario contra fallos de infraestructura externa.
+- **3 Pruebas de Integración (`ReservaPersistenciaIntegracionTest`):** Diseñadas para validar la persistencia contra un contenedor MySQL real gestionado mediante **Testcontainers**. La clase cuenta con la anotación `@Testcontainers(disabledWithoutDocker = true)`. En compilaciones locales o runners donde el daemon de Docker no expone el socket a la JVM del anfitrión, Testcontainers omite de forma segura estas 3 pruebas (`Skipped: 3`), protegiendo el build unitario contra fallos de infraestructura externa. La salida de ejecución se encuentra documentada en [`pruebas/evidencias/testcontainers-reserva-test.txt`](../../pruebas/evidencias/testcontainers-reserva-test.txt).
 
 ---
 

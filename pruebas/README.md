@@ -1,6 +1,6 @@
 # Módulo de Pruebas y Evidencias — TRAVELINK 🛡️
 
-Este directorio consolida todos los scripts de prueba, configuraciones de herramientas de seguridad, planes de carga, datos sintéticos y evidencias generadas para el sistema **TRAVELINK** (Spring Boot 3.3.4 + Java 21 + MySQL 8.0).
+Este directorio consolida todos los scripts de prueba, configuraciones de herramientas de seguridad, planes de carga, datos sintéticos y evidencias generadas para el sistema **TRAVELINK** (Spring Boot 3.3.13 / base auditada 3.3.4 + Java 21 + MySQL 8.0).
 
 ---
 

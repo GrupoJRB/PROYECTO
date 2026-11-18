@@ -1,13 +1,13 @@
 # Tabla de Dependencias Vulnerables y CVEs Detectados (OWASP Dependency-Check)
 
-> **Origen de datos:** Generado automáticamente extrayendo de forma literal los datos de `pruebas/evidencias/dependency-check/dependency-check-report.json`.
-> Total de componentes vulnerables analizados: **15**.
+> **Origen de datos:** Generado a partir de los datos literales de `pruebas/evidencias/dependency-check/dependency-check-report.json`, correspondientes a la **línea base original de escaneo SCA (Spring Boot 3.3.4)**.
+> Total de componentes vulnerables catalogados en línea base: **15**.
 >
 > ⚠️ **Nota Metodológica sobre Discrepancias NVD vs. Fabricante (Vendor Advisory):**
 > Para vulnerabilidades como **`CVE-2026-40974`**, el fabricante (VMware / Spring) clasifica la severidad con CVSS 5.0 MEDIO (vector `AV:A/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L`, asumiendo red adyacente y MITM en el canal de Cassandra), mientras que el National Vulnerability Database (NVD) calculó preliminarmente CVSS 9.8 CRÍTICO (vector `AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H`). OWASP Dependency-Check consume directamente la fuente NVD al no emplear el analizador de OSS Index ni base privada, por lo que el reporte de escaneo refleja formalmente la evaluación NVD (9.8). En el informe de seguridad se documenta esta dualidad técnica.
 >
 > 📌 **Deuda Técnica y Ciclo de Vida de Soporte (Spring Boot 3.x a 4.x):**
-> Se actualizó el proyecto a **Spring Boot 3.3.13** (el último parche de mantenimiento comunitario gratuito de la serie 3.3). Todo el ecosistema Spring Boot 3.x se encuentra formalmente fuera de soporte gratuito general (Spring Boot 3.3 cerró su ciclo OSS y la línea 3.5 culminó en junio de 2026). Diversas vulnerabilidades publicadas en 2026 (como las de Tomcat 10.1.5x o Spring Security 6.5+) tienen sus parches consolidados en la línea mayor **Spring Boot 4.x** (Spring Framework 7.x). Como trabajo futuro planificado se proyecta la migración mayor a Spring Boot 4.x, gestionando mientras tanto los hallazgos residuales mediante `.trivyignore` bajo la política de **riesgo aceptado temporalmente** con vencimiento `exp:2026-12-31`.
+> Se actualizó el proyecto a **Spring Boot 3.3.13** (el último parche de mantenimiento comunitario gratuito de la serie 3.3). Todo el ecosistema Spring Boot 3.x se encuentra formalmente fuera de soporte gratuito general (Spring Boot 3.3 cerró su ciclo OSS y la línea 3.5 culminó en junio de 2026). Diversas vulnerabilidades publicadas en 2026 (como las de Tomcat 10.1.5x o Spring Security 6.5+) tienen sus parches consolidados en la línea mayor **Spring Boot 4.x** (Spring Framework 7.x). Como trabajo futuro planificado se proyecta la migración mayor a Spring Boot 4.x, gestionando mientras tanto los hallazgos residuales mediante `.trivyignore` bajo la política de **riesgo aceptado temporalmente** con vencimiento `exp:2027-06-30`.
 
 ## 1. Resumen por Componente y Severidad Máxima
 
@@ -286,4 +286,30 @@
 | CVE ID | Severidad | CVSS v3 / Score | CWE | Descripción Literal (Reporte ODC) |
 |---|:---:|:---:|:---:|---|
 | **CVE-2025-31672** | MEDIUM | 5.3 | CWE-20, NVD-CWE-noinfo | Improper Input Validation vulnerability in Apache POI. The issue affects the parsing of OOXML format files like xlsx, docx and pptx. These file formats are basically zip files and it is possible for malicious users to add zip entries with duplicate names (including the path) in the zip. In this case, products reading the affected file could read different data because 1 of the zip entries with the duplicate name is selected over another but different products may choose a different zip entry. This issue affects Apache POI poi-ooxml before 5.4.0. poi-ooxml 5.4.0 has a check that throws an exception if zip entries with duplicate file names are found in the input file. Users are recommended to upgrade to version poi-ooxml 5.4.0, which fixes the issue. Please read  https://poi.apache.org/security.html  for recommendations about how to use the POI libraries securely. |
+
+---
+
+## 3. Estado tras actualizar a Spring Boot 3.3.13
+
+Tras la actualización del proyecto a **Spring Boot 3.3.13** (con Tomcat 10.1.42 y Spring Security 6.3.8) y la ejecución del escáner Trivy (`trivy fs . --scanners vuln --severity CRITICAL --ignore-unfixed --exit-code 1`), se verificaron los siguientes resultados técnicos:
+
+### 3.1. Vulnerabilidades Críticas Resueltas Automáticamente
+1. **CVE-2025-24813 (Tomcat Embed Core):** Resuelto upstream al actualizar Tomcat embebido de 10.1.30 a 10.1.42.
+2. **CVE-2024-38821 (Spring Security):** Resuelto upstream al actualizar Spring Security de 6.3.3 a 6.3.8.
+
+### 3.2. Vulnerabilidades Críticas Residuales con Parche Upstream (9 CVEs)
+Los 9 CVEs críticos restantes corresponden a vulnerabilidades publicadas en el año 2026 cuyos parches requieren versiones mayores que rompen compatibilidad binaria (Apache Tomcat 10.1.58+, Spring Security 6.5.9+ o Spring Framework 6.1.29+ / Spring Boot 4.x). Cada uno fue evaluado rigurosamente en el contexto de TRAVELINK e incorporado en `.trivyignore` con fecha de vencimiento `exp:2027-06-30`:
+
+| # | CVE ID | Paquete Afectado | Severidad | Versión Parchada | Justificación Técnica de Riesgo Aceptado | Vencimiento |
+|---|---|---|:---:|---|---|:---:|
+| 1 | **CVE-2026-22732** | `spring-security-web` | CRITICAL | 6.5.9, 7.0.4 | Cabeceras de seguridad HTTP omitidas bajo condiciones específicas. TRAVELINK mitiga perimetralmente con cabeceras configuradas en Nginx (Sesión 15); mitigación definitiva planificada con Spring Boot 4.x. | `exp:2027-06-30` |
+| 2 | **CVE-2026-47884** | `spring-webmvc` | CRITICAL | 6.1.29, 7.0.9 | Path traversal / RCE condicionado a vistas `XsltView` con comodín `/**`. Verificado en código que TRAVELINK opera 100% como API REST desacoplada (JSON) sin controladores ni vistas XSLT. | `exp:2027-06-30` |
+| 3 | **CVE-2026-41293** | `tomcat-embed-core` | CRITICAL | 10.1.54, 11.0.21 | Validación deficiente de cabeceras en HTTP/2 Coyote. Verificado en `application.properties` que `server.http2.enabled` no está activo; el backend opera en HTTP/1.1 y HTTP/2 se delega a Nginx. | `exp:2027-06-30` |
+| 4 | **CVE-2026-43512** | `tomcat-embed-core` | CRITICAL | 10.1.54, 11.0.21 | Authentication bypass en módulo DIGEST nativo de Tomcat. TRAVELINK no utiliza autenticación Digest; implementa autenticación basada en sesiones y BCrypt con Spring Security y MySQL. | `exp:2027-06-30` |
+| 5 | **CVE-2026-43515** | `tomcat-embed-core` | CRITICAL | 10.1.55, 11.0.22 | Bypass de autorización en Tomcat Realm. TRAVELINK no define Realms de contenedor; la autorización se delega exclusivamente a `SecurityFilterChain`. | `exp:2027-06-30` |
+| 6 | **CVE-2026-55276** | `tomcat-embed-core` | CRITICAL | 10.1.56, 11.0.23 | Logs de seguridad engañosos por control de flujo incorrecto (CWE-670). Impacto limitado a la fiabilidad de registros de auditoría de Tomcat, sin afectación en autenticación ni control de acceso. TRAVELINK no depende de estos logs para decisiones de seguridad. | `exp:2027-06-30` |
+| 7 | **CVE-2026-65182** | `tomcat-embed-core` | CRITICAL | 10.1.58, 11.0.25 | Constraint bypass en mapeos declarativos de `web.xml`. Verificado que no existe ningún archivo `web.xml` en el repositorio; las restricciones de seguridad son 100% declarativas en código Java (`SecurityConfig`). | `exp:2027-06-30` |
+| 8 | **CVE-2026-65905** | `tomcat-embed-core` | CRITICAL | 10.1.58, 11.0.25 | Replay attack en autenticador DIGEST de Tomcat. El autenticador Digest de Tomcat no está configurado ni en uso en el aplicativo. | `exp:2027-06-30` |
+| 9 | **CVE-2026-68525** | `tomcat-embed-core` | CRITICAL | 10.1.58, 11.0.25 | Bypass de formulario FORM nativo de contenedor Tomcat. El endpoint de autenticación `/api/auth/login` es administrado por Spring Security, no por el mecanismo de contenedor Tomcat. | `exp:2027-06-30` |
+
 

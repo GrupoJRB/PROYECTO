@@ -11,7 +11,7 @@
 
 ## 1. Resumen Ejecutivo
 
-Durante el ciclo de evaluación de la **Semana 14 (Sesión 27)** se llevó a cabo una auditoría integral de seguridad de software sobre la plataforma **TRAVELINK**, construida sobre **Spring Boot 3.3.4**, **Java 21 LTS** y **MySQL 8.0**. La auditoría combinó análisis estático de código fuente (SAST), análisis de composición de software de dependencias (SCA), escaneo dinámico de aplicaciones web (DAST), fuzzing de API, pruebas de carga y concurrencia con Apache JMeter, y pruebas controladas de inyección SQL con SQLMap.
+Durante el ciclo de evaluación de la **Semana 14 (Sesión 27)** se llevó a cabo una auditoría integral de seguridad de software sobre la plataforma **TRAVELINK**, evaluada inicialmente sobre la línea base **Spring Boot 3.3.4** y actualizada a **Spring Boot 3.3.13** en el proceso de remediación SCA, con **Java 21 LTS** y **MySQL 8.0**. La auditoría combinó análisis estático de código fuente (SAST), análisis de composición de software de dependencias (SCA), escaneo dinámico de aplicaciones web (DAST), fuzzing de API, pruebas de carga y concurrencia con Apache JMeter, y pruebas controladas de inyección SQL con SQLMap.
 
 ### Principales Conclusiones de la Evaluación:
 1. **Control de Acceso y Autenticación:** Se identificaron debilidades críticas en la lógica de autorización del backend, incluyendo un mecanismo de bypass hardcodeado en el servicio de usuarios (**H-01**), acceso irrestricto sin autenticación al historial de reservas (**H-03** / IDOR masivo), y rutas duales administrativas que eluden la restricción de rol `ROLE_ADMIN` (**H-08**).
@@ -31,7 +31,7 @@ flowchart TD
     subgraph RedHost["Host de Pruebas (Loopback 127.0.0.1)"]
         subgraph DockerNet["Red Interna Aislada (travelink-net: bridge)"]
             DB[("travelink-db (MySQL 8.0)<br/>DBTravelink | :3306")]
-            APP["travelink-app (Spring Boot 3.3.4)<br/>Java 21 JRE | :8080"]
+            APP["travelink-app (Spring Boot 3.3.13 / base 3.3.4)<br/>Java 21 JRE | :8080"]
             ZAP["zaproxy/zap-stable<br/>(DAST Scanner)"]
             JMET["justb4/jmeter:latest<br/>(Load Tester)"]
             SQLM["travelink-sqlmap:latest<br/>(SQLi Tester)"]
@@ -125,14 +125,14 @@ Se ejecutaron pruebas de estrés sobre `http://app:8080` evaluando llamadas mixt
 | **H-09** | Broken Object Level Authorization (BOLA) en Cancelaciones y Reseñas | **ALTO** | `8.1` | CWE-639 | A01: Broken Access | `CancelarReservaHandler.java` (L66-85) / `CalificarHandler.java` (L53-126) |
 
 ### 5.1. Hallazgos del Análisis de Dependencias (SCA)
-El escaneo con OWASP Dependency-Check analizó todas las dependencias transitivas del `pom.xml`, identificando **15 componentes vulnerables** y un total de **179 CVEs**:
-- **Componentes Críticos (CVSS >= 9.0):** `tomcat-embed-core-10.1.30.jar` (55 CVEs, máx 9.8), `spring-core-6.1.13.jar` (35 CVEs, máx 9.8), `spring-web-6.1.13.jar` (35 CVEs, máx 9.8), `spring-boot-3.3.4.jar` (7 CVEs, máx 9.8), `spring-security-core-6.3.3.jar` (8 CVEs, máx 9.1).
+El escaneo con OWASP Dependency-Check analizó todas las dependencias transitivas del `pom.xml` en su línea base original (Spring Boot 3.3.4), identificando **15 componentes vulnerables** y un total de **179 CVEs**:
+- **Componentes Críticos (CVSS >= 9.0) en la línea base:** `tomcat-embed-core-10.1.30.jar` (55 CVEs, máx 9.8), `spring-core-6.1.13.jar` (35 CVEs, máx 9.8), `spring-web-6.1.13.jar` (35 CVEs, máx 9.8), `spring-boot-3.3.4.jar` (7 CVEs, máx 9.8), `spring-security-core-6.3.3.jar` (8 CVEs, máx 9.1).
 - **Nota Metodológica sobre `CVE-2026-40974`:** El fabricante (VMware) califica la ausencia de verificación de hostname SSL en Cassandra con CVSS 5.0 (Medio), mientras que NVD le asignó de forma preliminar CVSS 9.8 (Crítico). Dependency-Check refleja formalmente el registro de NVD en el reporte local.
 
 ### 5.1.1. Deuda Técnica del Ecosistema y Ciclo de Vida (Spring Boot 3.x a 4.x)
 - **Estado de Soporte:** El proyecto fue actualizado a **Spring Boot 3.3.13** (último release comunitario de la serie 3.3). Todo el ciclo Spring Boot 3.x se encuentra fuera de soporte comunitario gratuito (Spring Boot 3.3 cerró su ciclo OSS y la línea 3.5 culminó en junio de 2026).
 - **Vulnerabilidades de 2026:** Los CVEs críticos publicados en 2026 (como las series de Apache Tomcat 10.1.5x o Spring Security 6.5+/7.0+) tienen sus correcciones definitivas en la línea **Spring Boot 4.x** (Spring Framework 7.x).
-- **Plan de Acción y Mitigación:** Se define la migración mayor a Spring Boot 4.x como trabajo futuro planificado. Para el pipeline de integración continua (CI) y la entrega académica, las vulnerabilidades residuales se gestionan en `.trivyignore` bajo la política formal de **riesgo aceptado temporalmente** con vencimiento `exp:2026-12-31`.
+- **Plan de Acción y Mitigación:** Se define la migración mayor a Spring Boot 4.x como trabajo futuro planificado. Para el pipeline de integración continua (CI) y la entrega académica, las vulnerabilidades residuales se gestionan en `.trivyignore` bajo la política formal de **riesgo aceptado temporalmente** con vencimiento `exp:2027-06-30`.
 
 ### 5.2. Hallazgos del Análisis Dinámico (ZAP Baseline)
 El escaneo pasivo de OWASP ZAP sobre 62 URLs arrojó:

@@ -13,7 +13,7 @@ TRAVELINK es una aplicación web empresarial orientada al sector turístico del 
 | Capa | Tecnologías |
 |---|---|
 | **Lenguaje y Runtime** | Java 21 (LTS) |
-| **Framework Backend** | Spring Boot 3.3.4 |
+| **Framework Backend** | Spring Boot 3.3.13 (actualizado desde la línea base 3.3.4 utilizada en el escaneo SCA original) |
 | **Seguridad** | Spring Security 6 (BCrypt, CSRF con cookies, control por roles, bloqueo tras 5 intentos fallidos, cabeceras seguras) |
 | **Persistencia Principal (DAO)** | Spring Data JPA / Hibernate (CRUD y consultas por entidad) |
 | **Persistencia Especializada** | JDBC Nativo con `PreparedStatement` (Agregaciones de dashboard, JOINs complejos y reportes) |

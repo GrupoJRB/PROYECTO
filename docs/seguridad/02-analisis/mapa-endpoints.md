@@ -10,7 +10,7 @@
 ## 1. Resumen Ejecutivo de la Superficie de Exposición
 
 El análisis de la configuración de seguridad (`com.travelink.config.SecurityConfig`) y de los controladores REST y handlers (`com.travelink.controlador.*`) reveló una arquitectura mixta:
-- Un framework moderno basado en **Spring Boot 3.3.4** y **Spring Security 6**.
+- Un framework moderno basado en **Spring Boot** (línea base auditada: 3.3.4; actualizado a 3.3.13) y **Spring Security 6**.
 - Un subsistema de controladores Spring REST (`@RestController`) que coexiste con controladores adaptadores delegando peticiones a handlers HTTP nativos de tipo `com.sun.net.httpserver.HttpHandler` (`ServletHttpExchangeAdapter`).
 - Un modelo de autorización con roles: `ROLE_TURISTA` (Rol 1), `ROLE_AGENCIA` (Rol 2) y `ROLE_ADMIN` (Rol 3).
 

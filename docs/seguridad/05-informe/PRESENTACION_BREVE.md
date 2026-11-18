@@ -16,7 +16,7 @@
 * **Equipo / Integrantes:** Equipo de Aseguramiento de Calidad y Ciberseguridad
 * **Fecha:** Noviembre 2026
 * **Puntos Clave:**
-  - Aplicación web desarrollada sobre Java 21, Spring Boot 3.3.4 y MySQL 8.0.
+  - Aplicación web desarrollada sobre Java 21, Spring Boot (línea base 3.3.4, actualizada a 3.3.13) y MySQL 8.0.
   - Entorno 100% reproducible y aislado en contenedores Docker locales.
   - Alcance sustentado en OWASP Top 10, OWASP WSTG y la Rúbrica Oficial de 8 Criterios (100 pts + 5 pts bonus).
 
