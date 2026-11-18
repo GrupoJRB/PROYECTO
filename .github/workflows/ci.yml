@@ -74,8 +74,8 @@ jobs:
         run: |
           cat << EOF > .env
           DB_USERNAME=root
-          DB_PASSWORD=${{ env.CI_DB_PASSWORD }}
-          MYSQL_ROOT_PASSWORD=${{ env.CI_DB_PASSWORD }}
+          DB_PASSWORD=$CI_DB_PASSWORD
+          MYSQL_ROOT_PASSWORD=$CI_DB_PASSWORD
           MYSQL_DATABASE=DBTravelink
           EOF
           chmod +x mvnw

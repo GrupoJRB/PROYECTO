@@ -97,9 +97,9 @@ jobs:
 
       - name: Construir y Empujar Imagen Docker
         run: |
-          docker build -t ${{ env.IMAGE_TAG }} -t ${{ env.LATEST_TAG }} .
-          docker push ${{ env.IMAGE_TAG }}
-          docker push ${{ env.LATEST_TAG }}
+          docker build -t "$IMAGE_TAG" -t "$LATEST_TAG" .
+          docker push "$IMAGE_TAG"
+          docker push "$LATEST_TAG"
 
   # ----------------------------------------------------------------------------
   # 3. ENTORNO STAGING: DESPLIEGUE EFÍMERO Y SMOKE TESTS
