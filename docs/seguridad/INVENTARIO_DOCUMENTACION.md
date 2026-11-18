@@ -47,7 +47,8 @@ Este documento registra el catálogo maestro de activos, scripts, guías de prue
 | [`pruebas/seguridad/config/zap.yaml`](../../pruebas/seguridad/config/zap.yaml) | Configuración | Reglas de escaneo ZAP Baseline | N/A |
 | [`pruebas/seguridad/payloads/calificar.json`](../../pruebas/seguridad/payloads/calificar.json) | Payload | Carga JSON para validación de CSRF/XSS en PoC-03 | N/A |
 | [`pruebas/rendimiento/travelink.jmx`](../../pruebas/rendimiento/travelink.jmx) | Plan JMeter | Plan de pruebas no-GUI multiescenario para Apache JMeter | N/A |
-| [`pruebas/evidencias/testcontainers-reserva-test.txt`](../../pruebas/evidencias/testcontainers-reserva-test.txt) | Pruebas Integración | Salida de ejecución JUnit 5 de `ReservaPersistenciaIntegracionTest` (Testcontainers) | `pruebas/evidencias/testcontainers-reserva-test.txt` |
+| [`pruebas/evidencias/integracion-testcontainers.txt`](../../pruebas/evidencias/integracion-testcontainers.txt) | Pruebas Integración | Salida de ejecución JUnit 5 de `ReservaPersistenciaIntegracionTest` con Docker activo | `pruebas/evidencias/integracion-testcontainers.txt` |
+| [`pruebas/evidencias/despliegue-local-3.3.13.txt`](../../pruebas/evidencias/despliegue-local-3.3.13.txt) | Despliegue Local | Logs de contenedor saludable (`healthy`) y verificación HTTP de Spring Boot 3.3.13 | `pruebas/evidencias/despliegue-local-3.3.13.txt` |
 
 ---
 
