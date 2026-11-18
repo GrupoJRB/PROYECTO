@@ -1,6 +1,9 @@
-# Experiencia de Usuario y Diseño de Interfaz (UX/UI) — TRAVELINK 🎨
+# Módulo de Experiencia de Usuario y Diseño de Interfaz (UX/UI)
 
-Este directorio contiene las directrices de diseño visual, arquitectura de información frontend, mapa de navegación y estándares de accesibilidad de **TRAVELINK**.
+Índice de documentación sobre el diseño visual, componentes y prototipos de TRAVELINK.
 
-- **Documento Principal:** [`GUIA_ESTILOS_UX.md`](GUIA_ESTILOS_UX.md)
-- **Alcance Visual:** Arquitectura frontend ligera y desacoplada (HTML5 Semántico, CSS3 modular con Flexbox/Grid, Vanilla JavaScript), diseño responsivo móvil/desktop, paleta cromática y flujos por rol (Turista, Agencia, Administrador).
+## Contenido
+
+- [GUIA_ESTILOS_UX.md](GUIA_ESTILOS_UX.md): Guía de diseño, arquitectura frontend desacoplada (HTML5/CSS3/Vanilla JS), paleta de colores y accesibilidad.
+- [PROTOTIPOS.md](PROTOTIPOS.md): Inventario completo de las 34 páginas HTML por rol (admin, agencia, turista) con ruta, propósito, componentes clave, endpoints que consume y registro de capturas pendientes.
+- `capturas/`: Directorio de imágenes y capturas de pantalla de la interfaz de usuario.
